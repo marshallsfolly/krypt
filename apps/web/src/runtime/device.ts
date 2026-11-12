@@ -47,9 +47,6 @@ export type { ChatRow, FileRow, MessageRow, PersonRow, KryptEvent };
 
 /** How long leaving waits for the notice to be sent before deleting. */
 const LEAVE_WAIT_MS = 30_000;
-/** Messages one report carries at most. */
-const REPORT_MESSAGES_MAX = 20;
-const REPORT_TEXT_MAX = 2_000;
 /** setTimeout's longest delay. */
 const TIMEOUT_MAX_MS = 2 ** 31 - 1;
 
@@ -758,33 +755,6 @@ export class Runtime {
 
   async unblock(identity: string): Promise<void> {
     await this.run((d) => ({ step: d.unblock(identity) }));
-  }
-
-  /** Reports someone to krypt with the last messages they sent here (the
-   * only thing that leaves the device), then blocks them. */
-  async reportAbuse(conversation: string, identity: string, reason: string, alone: boolean): Promise<boolean> {
-    const rows = await store.messages(this.db, conversation);
-    const messages = rows
-      .filter((r) => r.from === identity && !r.system)
-      .slice(-REPORT_MESSAGES_MAX)
-      .map((r) => ({
-        at: new Date(r.at).toISOString(),
-        text: r.file ? `[${r.file.mediaType} file, ${r.file.size} bytes]` : r.text.slice(0, REPORT_TEXT_MAX),
-      }));
-    const body = JSON.stringify({ version: 1, reported: identity, reason, messages });
-    let sent = false;
-    try {
-      const response = await fetch(`${this.mailboxBase}/v1/report`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body,
-      });
-      sent = response.ok;
-    } catch {
-      // Blocking still happens.
-    }
-    await this.block(identity, conversation, alone);
-    return sent;
   }
 
   /** Sets the conversation's disappearing-message timer for everyone. */

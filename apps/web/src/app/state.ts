@@ -323,13 +323,6 @@ export async function createAppState(rt: Runtime) {
       await rt.unblock(identity);
       setBlocked(rt.blocked());
     },
-    async report(identity: string, conversation: string, reason: string) {
-      const c = conversations().find((c) => c.id === conversation);
-      const alone = !!c && c.members.filter((m) => m !== rt.identity).length === 1;
-      const sent = await rt.reportAbuse(conversation, identity, reason, alone);
-      setBlocked(rt.blocked());
-      return sent;
-    },
     /** "Always relay calls", a per-device choice. */
     relayCalls: relay,
     setRelayCalls(on: boolean) {

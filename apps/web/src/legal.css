@@ -1,0 +1,77 @@
+/* The Terms and Privacy Policy pages (legal.ts). Documents, not the app:
+ * they scroll, and their text keeps a readable measure. */
+
+html.legal-page,
+html.legal-page body {
+  height: auto;
+  overflow: auto;
+}
+
+.legal {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: max(24px, env(safe-area-inset-top)) 20px max(40px, env(safe-area-inset-bottom));
+}
+
+.legal-top {
+  padding-bottom: 32px;
+}
+
+.legal-top .brand {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.legal article > .display {
+  margin: 0 0 6px;
+}
+
+.legal h2 {
+  margin: 40px 0 12px;
+}
+
+.legal h3 {
+  margin: 0;
+}
+
+.legal p,
+.legal li {
+  margin: 0 0 12px;
+  max-width: 68ch;
+}
+
+.legal ul {
+  margin: 0 0 12px;
+  padding-inline-start: 1.25em;
+}
+
+.legal a {
+  color: var(--accent-ink);
+}
+
+/* What a reader must not miss (the warranty disclaimer and the limit on
+ * liability): set apart and in heavier type. */
+.legal-conspicuous {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 600;
+}
+
+.legal-item {
+  display: grid;
+  gap: 6px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.legal-item p {
+  margin: 0;
+}
+
+.legal-foot {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}

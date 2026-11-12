@@ -9,8 +9,8 @@
 #     No public access and no custom domain: the Worker is the only way in.
 #   - Lifecycle: parts are deleted 30 days after upload (RETENTION_MS), the
 #     same as log entries, so the bucket can never grow without bound.
-#   - Abuse reports (r/<day>/<id>.json, what a reporter chose to send) are
-#     deleted after 90 days.
+#   - Abuse reports (r/<day>/<id>.json) are no longer accepted (decision 56);
+#     the rule deleting them after 90 days stays so any sent before still go.
 set -euo pipefail
 
 BUCKET=krypt-files

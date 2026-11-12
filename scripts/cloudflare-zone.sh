@@ -6,8 +6,10 @@
 #
 # Baseline:
 #   - CAA: only Cloudflare's certificate authorities may issue for krypt.chat.
-#   - Email: the domain never sends mail, so SPF, DMARC, DKIM and a null MX
-#     (RFC 7505) tell every receiver to reject mail claiming to be from it.
+#   - Email: the domain never sends mail, so DMARC and an empty DKIM key tell
+#     every receiver to reject mail claiming to be from it. It does receive:
+#     hello@ goes through Cloudflare Email Routing, which owns the MX and SPF
+#     records (so this sets neither, and never a null MX).
 #   - TLS: full (strict), HTTPS only, TLS 1.2 minimum, no 0-RTT (replayable).
 #   - DNSSEC: on. Its DS record must then be published at the registrar.
 set -euo pipefail
@@ -57,10 +59,8 @@ for ca in letsencrypt.org "pki.goog; cansignhttpexchanges=yes" ssl.com; do
   ensure_record "$(caa issue "$ca")"
   ensure_record "$(caa issuewild "$ca")"
 done
-ensure_record "$(txt "$ZONE_NAME" "v=spf1 -all")"
 ensure_record "$(txt "_dmarc.$ZONE_NAME" "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s")"
 ensure_record "$(txt "*._domainkey.$ZONE_NAME" "v=DKIM1; p=")"
-ensure_record "$(jq -nc --arg name "$ZONE_NAME" '{type: "MX", name: $name, content: ".", priority: 0, ttl: 3600}')"
 
 echo "settings:"
 set_setting() {

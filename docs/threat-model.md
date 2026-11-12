@@ -50,8 +50,6 @@ adversary that is always present.
   handle. A safety-number check catches that: the fingerprint and safety
   numbers are computed from the identity key, not from anything the directory
   says. Handles are a convenience, not a root of trust.
-- **Reports** are the one place plaintext reaches the server, and only what a
-  reporter chose to send about someone else's messages.
 - **Quiet messages:** read receipts, edits and reactions taken back are
   marked quiet in plaintext (so they wake nobody). With their size and
   timing, the mailbox can tell roughly when someone reads.
@@ -185,7 +183,6 @@ included, within seconds. An address is an IPv4 address or an IPv6 /64.
 | TURN relay | 10 credentials a minute per address; 64 per conversation per day; 1-hour credentials |
 | Handles | 30 requests a minute per address |
 | Drops | 60 a minute per address; one payload, read once, 10 minutes |
-| Reports | 4 a minute per address; JSON objects only; kept 90 days |
 
 Anyone can make a conversation log (it needs no account), so the
 per-conversation bounds limit a member, not a stranger with many logs: the
@@ -225,7 +222,7 @@ code every browser runs (see the Cloudflare section).
   crashes on damaged storage, now fixed with regression tests.
 - **Browser end to end** (`apps/web/e2e/chat.mjs`), locally and against
   krypt.chat: messaging, files and their metadata, calls, requests, blocking,
-  reports, disappearing messages, linked devices, handles and passkey restore.
+  disappearing messages, linked devices, handles and passkey restore.
 
 ## Before going public
 

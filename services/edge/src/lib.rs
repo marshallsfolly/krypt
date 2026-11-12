@@ -32,11 +32,6 @@
 //! object like file parts, within a daily allowance per conversation and a
 //! per-IP limit: relayed traffic costs money past the free tier.
 //!
-//! Abuse reports (`POST /v1/report`) hold only what a reporter chose to send
-//! (by default, the last messages the reported identity sent them). They are
-//! stored in the same bucket under `r/<day>/<id>.json`, deleted after 90 days,
-//! and read with `just reports`.
-//!
 //! Welcomes for new members (forwards) are written to a `pending` table in
 //! the same synchronous block that accepts the commit, then delivered to the
 //! inbox objects by the alarm, which retries until each one lands. Delivery
@@ -69,13 +64,9 @@ const FILES_BINDING: &str = "FILES";
 const FILE_RATE_BINDING: &str = "FILES_PER_IP";
 /// Per-IP limit on relay credentials.
 const TURN_RATE_BINDING: &str = "TURN_PER_IP";
-/// Per-IP limit on abuse reports.
-const REPORT_RATE_BINDING: &str = "REPORTS_PER_IP";
 /// Per-IP limit on new logs (a conversation's first commit, a requests log
 /// opened): each costs storage for months.
 const CREATE_RATE_BINDING: &str = "CREATES_PER_IP";
-/// Largest abuse report: twenty messages of a few kilobytes.
-const REPORT_MAX: usize = 96 * 1024;
 /// The Cloudflare TURN key (a var) and its API token (a secret, `just
 /// edge-turn-secret`). Without them, calls get STUN only: direct paths work,
 /// relayed ones do not.
@@ -371,51 +362,6 @@ async fn turn(request: Request, env: &Env, path: &str) -> Result<Response> {
     Ok(response)
 }
 
-/// `YYYY-MM-DD` for a count of days since 1970-01-01 (Howard Hinnant's
-/// `civil_from_days`).
-fn civil_date(days: u64) -> String {
-    let z = days + 719_468;
-    let era = z / 146_097;
-    let doe = z - era * 146_097;
-    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
-    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-    let mp = (5 * doy + 2) / 153;
-    let day = doy - (153 * mp + 2) / 5 + 1;
-    let month = if mp < 10 { mp + 3 } else { mp - 9 };
-    let year = yoe + era * 400 + u64::from(month <= 2);
-    format!("{year:04}-{month:02}-{day:02}")
-}
-
-/// Stores an abuse report as sent. The app builds it; nothing here reads
-/// it, so it only has to be small, JSON-shaped, and rate limited.
-async fn report(mut request: Request, env: &Env) -> Result<Response> {
-    if !allowed(env, &request, REPORT_RATE_BINDING).await? {
-        return Response::error("slow down", 429);
-    }
-    if declared_over(&request, REPORT_MAX)? {
-        return Response::error("report too large", 413);
-    }
-    if request.headers().get("content-type")?.as_deref() != Some("application/json") {
-        return Response::error("json only", 415);
-    }
-    let body = request.bytes().await?;
-    if body.len() > REPORT_MAX {
-        return Response::error("report too large", 413);
-    }
-    // A JSON object, or nothing is kept: the operator's tools must be able
-    // to read every report that is.
-    if !serde_json::from_slice::<serde_json::Value>(&body).is_ok_and(|v| v.is_object()) {
-        return Response::error("malformed report", 400);
-    }
-    // Unique per request (Cloudflare's ray id), and says nothing about the
-    // reporter.
-    let ray = request.headers().get("cf-ray")?.unwrap_or_default();
-    let id = krypt_core::hash16(&[ray.as_bytes(), &now_ms().to_le_bytes(), &body].concat());
-    let key = format!("r/{}/{}.json", civil_date(now_ms() / DAY_MS), hex(&id));
-    env.bucket(FILES_BINDING)?.put(key, body).execute().await?;
-    Ok(Response::empty()?.with_status(201))
-}
-
 /// Stores one encrypted part of a file, once the conversation's object has
 /// checked the uploader's proof of membership (`krypt-auth`: the epoch,
 /// little-endian, and the tag, in hex) and the day's allowance. A part
@@ -491,18 +437,6 @@ async fn get_file(path: &str, env: &Env) -> Result<Response> {
     // A part never changes once stored.
     headers.set("cache-control", "private, max-age=2592000, immutable")?;
     Ok(response)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::civil_date;
-
-    #[test]
-    fn civil_dates() {
-        assert_eq!(civil_date(0), "1970-01-01");
-        assert_eq!(civil_date(11_016), "2000-02-29");
-        assert_eq!(civil_date(20_764), "2026-11-07");
-    }
 }
 
 fn unhex_bytes<const N: usize>(text: &str) -> Option<[u8; N]> {
@@ -611,7 +545,6 @@ async fn route(mut request: Request, env: &Env, path: &str) -> Result<Response> 
         (Method::Put, path) if path.starts_with("/v1/file/") => put_file(request, env).await,
         (Method::Get, path) if path.starts_with("/v1/file/") => get_file(path, env).await,
         (Method::Post, path) if path.starts_with("/v1/turn/") => turn(request, env, path).await,
-        (Method::Post, "/v1/report") => report(request, env).await,
         (Method::Get, path) if path.starts_with("/v1/ws/") => {
             let Some(route) = unhex(&path["/v1/ws/".len()..]) else {
                 return Response::error("bad route", 400);

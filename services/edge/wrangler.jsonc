@@ -42,8 +42,6 @@
     { "name": "FILES_PER_IP", "namespace_id": "4101", "simple": { "limit": 32, "period": 60 } },
     // Call relay credentials per address: a few calls a minute.
     { "name": "TURN_PER_IP", "namespace_id": "4102", "simple": { "limit": 10, "period": 60 } },
-    // Abuse reports per address.
-    { "name": "REPORTS_PER_IP", "namespace_id": "4103", "simple": { "limit": 4, "period": 60 } },
     // Handle lookups and changes per address: handles can be guessed, so
     // listing them must stay slow.
     { "name": "HANDLES_PER_IP", "namespace_id": "4104", "simple": { "limit": 30, "period": 60 } },

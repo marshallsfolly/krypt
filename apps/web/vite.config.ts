@@ -55,5 +55,10 @@ export default defineConfig({
   plugins: [solid(), serviceWorker()],
   define: { __KRYPT_RELEASE_KEY__: JSON.stringify(releaseKey) },
   server: { proxy: { "/v1": { target: "http://127.0.0.1:8788", ws: true } } },
-  build: { target: "es2022", assetsInlineLimit: 0 },
+  build: {
+    target: "es2022",
+    assetsInlineLimit: 0,
+    // The app, and the Terms and Privacy Policy pages (/terms, /privacy).
+    rolldownOptions: { input: [here("./index.html"), here("./terms.html"), here("./privacy.html")] },
+  },
 });

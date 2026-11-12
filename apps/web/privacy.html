@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" class="legal-page" data-theme="glass" data-mode="dark" data-accent="mint">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="What krypt can and can't see, what it keeps, and for how long." />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#07080C" />
+    <title>Privacy Policy · krypt</title>
+  </head>
+  <body>
+    <!-- docs/decisions.md, 55. Every period and limit here comes from docs/protocol.md and the mailbox:
+         change them together. -->
+    <main class="legal">
+      <header class="legal-top">
+        <a class="brand" href="/">krypt</a>
+      </header>
+      <article>
+        <h1 class="display">Privacy Policy</h1>
+        <p class="caption muted">Last updated November 12, 2026</p>
+
+        <p>
+          krypt is built so that we know as little as possible. This policy says exactly what reaches us, what we
+          can see, and how long we keep it. “We” means krypt’s operator, in the United States.
+        </p>
+        <ul>
+          <li>We can’t read your messages, files or calls, or see the names you give people and groups.</li>
+          <li>krypt asks for no phone number, email address or account.</li>
+          <li>
+            There are no ads, analytics, trackers or cookies. The app loads nothing from anywhere but krypt.chat.
+          </li>
+          <li>We don’t keep logs of IP addresses.</li>
+          <li>We don’t sell or share personal information.</li>
+        </ul>
+
+        <h2 class="title">What stays on your devices</h2>
+        <p>
+          Your identity’s keys, your contacts, your conversations and their history, the names you give people,
+          and your settings are kept in your browser’s storage on each of your devices. They leave a device only
+          end-to-end encrypted. “Burn this identity” in Settings deletes them from that device, as does clearing
+          krypt’s site data in your browser.
+        </p>
+
+        <h2 class="title">What reaches our servers</h2>
+
+        <section class="legal-item">
+          <h3 class="headline">Messages and changes to conversations</h3>
+          <p>
+            End-to-end encrypted. We see each one’s size (rounded up to a multiple of 32 bytes), when it was sent,
+            and the random address of its conversation.
+          </p>
+          <p class="muted">
+            Kept: 30 days after it’s sent, or less when a conversation holds more than 4,096 entries or 64 MiB. A
+            conversation nobody has used for 90 days is deleted entirely.
+          </p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Files</h3>
+          <p>
+            Photos, videos, voice messages and other files are encrypted on your device and stored in parts. We
+            see their size and when they were uploaded, not their names or contents. Photos and videos have their
+            location and camera details removed before they’re encrypted.
+          </p>
+          <p class="muted">Kept: 30 days after upload.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Keys for starting conversations</h3>
+          <p>
+            Your devices publish public keys so others can add you to conversations. They include your identity’s
+            public key, which is also in your contact card.
+          </p>
+          <p class="muted">Kept: until used, or until they expire.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Your @handle, if you claim one</h3>
+          <p>
+            The handle, the contact card it points to (your identity’s public key and your inbox address) and your
+            passkey’s public key. Anyone who knows the handle can look up the card.
+          </p>
+          <p class="muted">Kept: until you give up the handle.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Your passkey backup, if you make one</h3>
+          <p>
+            Your identity and contacts, encrypted with a key only your passkey can produce. We can’t open it.
+          </p>
+          <p class="muted">Kept: until a newer backup replaces it, or you give up the handle.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Notifications, if you turn them on</h3>
+          <p>
+            Your browser gives krypt an address at its push service (Google, Mozilla, Apple or Microsoft). We keep
+            it with the conversations it’s for, and send it wakeups that carry no content: the push service learns
+            only that something happened.
+          </p>
+          <p class="muted">
+            Kept: 30 days after your device last renewed it (it renews weekly), or until you turn notifications off
+            or mute the conversation.
+          </p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Linking a device, and invite links</h3>
+          <p>
+            Linking passes your identity to your new device through a one-time package sealed so only that device
+            can open it. A request to join a group through its invite link is sealed so only the group’s admins can
+            read it.
+          </p>
+          <p class="muted">Kept: link packages until read or 10 minutes; join requests 30 days.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Typing and online status</h3>
+          <p>Encrypted, passed to the devices that are online at that moment, and never stored.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">Calls</h3>
+          <p>
+            Calls are encrypted end to end and connect your device directly to the other person’s when they can,
+            so they don’t pass through us. A direct call shows each of you the other’s IP address. When a call is
+            relayed (or you turn on “Always relay calls”), the encrypted call passes through Cloudflare’s relay
+            instead.
+          </p>
+          <p class="muted">Kept: nothing. Relay passes last 6 hours.</p>
+        </section>
+
+        <section class="legal-item">
+          <h3 class="headline">IP addresses</h3>
+          <p>
+            Our servers see the IP address of every request and use it at that moment to limit abuse: how many
+            requests and connections one address may make. An address is held only while your device’s connection
+            is open, and never written to our storage or logs.
+          </p>
+        </section>
+
+        <h2 class="title">What our servers can still learn</h2>
+        <p>
+          Even without contents, some information passes through our servers and Cloudflare’s while krypt runs:
+          which conversation addresses a device reads and writes, from which IP address, when, and how much.
+          Conversation addresses are random, not names, and we don’t record any of this. But someone who controlled
+          the servers could watch it. From the timing of read receipts (which wake nobody), they could also tell
+          roughly when someone reads.
+        </p>
+
+        <h2 class="title">Cookies and tracking</h2>
+        <p>
+          krypt uses no cookies and no tracking of any kind. Your browser’s storage keeps the app’s data and your
+          settings, such as your theme and your privacy switches. That never leaves your device.
+        </p>
+
+        <h2 class="title">Who else is involved</h2>
+        <ul>
+          <li>
+            <strong>Cloudflare, Inc.</strong> runs our servers, serves krypt.chat and relays calls. It handles the
+            information above and IP addresses for us, and may keep its own records of traffic under its own
+            policies.
+          </li>
+          <li>
+            <strong>Your browser’s push service</strong>, if you turn on notifications, as described above.
+          </li>
+          <li>
+            <strong>The people you talk to</strong> see your messages and your contact card, and, in a direct call,
+            your IP address. Anyone who knows your @handle can find your card. When you ask to join a group by its
+            invite link, its admins see your card and the name you give.
+          </li>
+        </ul>
+
+        <h2 class="title">When we share information</h2>
+        <p>
+          We don’t sell personal information, share it for advertising, or use it to profile anyone. We share what
+          we have only:
+        </p>
+        <ul>
+          <li>with Cloudflare, to run krypt;</li>
+          <li>
+            when the law requires it, in answer to valid legal process. We can only provide what’s described above.
+            That never includes the contents of messages, files or calls, your contacts, or any name except an
+            @handle;
+          </li>
+          <li>
+            to report apparent child sexual exploitation to the National Center for Missing &amp; Exploited
+            Children, as US law requires, or to protect someone’s life or safety in an emergency;
+          </li>
+          <li>if krypt is sold or reorganized, in which case this policy still covers what we already hold.</li>
+        </ul>
+        <p>Since there are no accounts, we have no way to tell you about a request for your information.</p>
+
+        <h2 class="title">Your choices</h2>
+        <ul>
+          <li>
+            <strong>Delete:</strong> “Burn this identity” deletes everything on that device; what’s on our servers
+            expires as listed above. “Give up handle” deletes your handle and its backup right away.
+          </li>
+          <li>
+            <strong>Switch things off:</strong> notifications, read receipts, typing and online status, and direct
+            calls (“Always relay calls”), all in Settings.
+          </li>
+          <li>
+            <strong>Ask us:</strong> write to <a href="mailto:hello@krypt.chat">hello@krypt.chat</a> to ask what we hold about you or to have it deleted,
+            wherever in the US you live. We usually can’t find anything about a person, because we don’t know who
+            anyone is, but we can always help with a handle. We won’t treat you differently for asking. We don’t
+            sell or share personal information as California law defines those terms.
+          </li>
+        </ul>
+
+        <h2 class="title">Children</h2>
+        <p>
+          krypt isn’t for children under 13. We don’t ask anyone’s age and don’t knowingly collect personal
+          information from children under 13. If you believe a child under 13 is using krypt, contact us.
+        </p>
+
+        <h2 class="title">Security</h2>
+        <p>
+          Messages use MLS, the IETF standard for end-to-end encryption, with post-quantum key exchange (ML-KEM-768
+          with X25519). The app runs only releases we have signed. krypt has had an internal security review, not
+          an independent audit, and no system is perfect. If a breach affects information we hold, we’ll give
+          notice as the law requires; since we can’t contact you directly, we’ll post it at krypt.chat and in the
+          app.
+        </p>
+
+        <h2 class="title">Where information is processed</h2>
+        <p>
+          We’re in the United States. Cloudflare’s network spans many countries, so information may be handled
+          outside your own. If you’re in the European Economic Area or the UK: we process information to provide
+          the service you ask for, for our legitimate interest in keeping krypt secure and limiting abuse, and to
+          meet legal obligations. You may ask to access, correct or delete your information, object to or restrict
+          its use, or receive it in a portable form, and you may complain to your data protection authority.
+        </p>
+
+        <h2 class="title">Changes to this policy</h2>
+        <p>
+          We’ll post any change here with a new date, and tell you in the app before an important change takes
+          effect.
+        </p>
+
+        <h2 class="title">Contact</h2>
+        <p><a href="mailto:hello@krypt.chat">hello@krypt.chat</a></p>
+      </article>
+      <footer class="legal-foot caption muted">
+        <a href="/terms">Terms</a> · <a href="/privacy">Privacy Policy</a> · <a href="/">Open krypt</a>
+      </footer>
+    </main>
+    <script type="module" src="/src/legal.ts"></script>
+  </body>
+</html>

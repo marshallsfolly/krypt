@@ -9,6 +9,7 @@ import { fingerprintOf } from "../runtime/device";
 import { handleState, passkeysSupported } from "../runtime/passkey";
 import { DevicesSection, HandleSection } from "./Devices";
 import { Hold } from "./Hold";
+import { LegalLinks } from "./Legal";
 import { ThemeCards } from "./ThemeCards";
 import { Tour } from "./Tour";
 import { release } from "../release/pin";
@@ -334,6 +335,9 @@ function Menu(props: { app: AppState; push?: PushState; onOpen: (page: SettingsP
       <ul class="list settings-menu" role="list">
         <Entry icon="flame" title={strings.burn} danger onClick={() => props.onOpen("burn")} />
       </ul>
+      <p class="caption muted settings-legal">
+        <LegalLinks words={strings.legal.links} />
+      </p>
       <ReleaseLine />
     </>
   );

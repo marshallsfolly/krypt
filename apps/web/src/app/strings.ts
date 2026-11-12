@@ -41,6 +41,17 @@ export const strings = {
   continue: "Continue",
   skip: "Skip",
 
+  /** The Terms and Privacy Policy (their own pages, /terms and /privacy).
+   * Each sentence is the words around the two links. */
+  legal: {
+    terms: "Terms",
+    privacy: "Privacy Policy",
+    agree: ["By continuing, you agree to krypt's ", " and ", "."],
+    published: ["krypt now has ", " and a ", ". By continuing to use krypt, you agree to them."],
+    links: ["", " · ", ""],
+    ok: "OK",
+  },
+
   presence: {
     typing: "typing…",
     typingIn: (names: string[]) =>
@@ -438,18 +449,6 @@ export const strings = {
     unblock: "Unblock",
     blocked: "Blocked",
     noBlocked: "You haven't blocked anyone.",
-    report: (name: string) => `Report ${name}`,
-    reportHint: (name: string) =>
-      `krypt receives the last messages ${name} sent you here, and nothing else from your device. ${name} is blocked too.`,
-    reportReasons: [
-      ["spam", "Spam"],
-      ["abuse", "Harassment or abuse"],
-      ["illegal", "Illegal content"],
-      ["other", "Something else"],
-    ] as [string, string][],
-    reportSend: "Report and block",
-    reported: "Reported. They're blocked.",
-    reportFailed: "They're blocked, but the report couldn't be sent. Try again later.",
     delete: "Delete conversation",
     deleteHint: "Removes it and everything in it from this device. Nobody is told.",
     deleteConfirm: "Delete",

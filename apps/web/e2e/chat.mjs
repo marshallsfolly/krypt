@@ -636,21 +636,13 @@ await step("a stranger's chat waits as a request, can't ring, and blocking ends 
   await carol.context.close();
 });
 
-await step("reporting sends only what they said, then blocks them", async () => {
+await step("blocking from the conversation's info ends it", async () => {
   const dave = await stranger("dave");
   await writeToAlice(dave, "buy cheap stuff now");
   await openRequest(alice.page);
   await alice.page.waitForSelector("::-p-text(buy cheap stuff now)");
   await alice.page.locator('button[aria-label="Conversation"]').click();
-  await alice.page.$$eval(".sheet button", (bs) => bs.find((b) => b.textContent.startsWith("Report") && b.closest(".sheet[open]")).click());
-  const sent = alice.page.waitForResponse((r) => r.url().endsWith("/v1/report"), { timeout });
-  await alice.page.$$eval(".sheet[open] button", (bs) => bs.find((b) => b.textContent === "Report and block").click());
-  const response = await sent;
-  const body = JSON.parse(response.request().postData());
-  if (response.status() !== 201) throw new Error(`report ${response.status()}`);
-  if (body.reason !== "spam" || body.messages.length !== 1 || body.messages[0].text !== "buy cheap stuff now") {
-    throw new Error(`report carried ${JSON.stringify(body)}`);
-  }
+  await alice.page.$$eval(".sheet button", (bs) => bs.find((b) => b.textContent.startsWith("Block") && b.closest(".sheet[open]")).click());
   await alice.page.waitForFunction(() => !document.querySelector(".requests"));
   await dave.context.close();
 });

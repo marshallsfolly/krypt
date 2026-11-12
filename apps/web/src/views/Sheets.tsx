@@ -293,44 +293,6 @@ export function MyCardSheet(props: { app: AppState; open: boolean; onClose: () =
   );
 }
 
-/** Reporting someone: what is sent is said plainly before it is sent. */
-function Report(props: { app: AppState; id: string; identity: string; onDone: (note: string) => void; onCancel: () => void }) {
-  const [reason, setReason] = createSignal("spam");
-  const [busy, setBusy] = createSignal(false);
-  const name = () => props.app.name(props.identity);
-  return (
-    <div class="verify stack">
-      <p class="caption">{strings.safety.reportHint(name())}</p>
-      <div class="segmented wrap" role="radiogroup" aria-label={strings.safety.report(name())}>
-        <For each={strings.safety.reportReasons}>
-          {([value, label]) => (
-            <button role="radio" aria-checked={reason() === value} onClick={() => setReason(value)}>
-              {label}
-            </button>
-          )}
-        </For>
-      </div>
-      <div class="row-actions">
-        <button class="btn ghost" onClick={props.onCancel}>
-          {strings.safety.cancel}
-        </button>
-        <button
-          class="btn danger"
-          disabled={busy()}
-          onClick={async () => {
-            setBusy(true);
-            haptic("tap");
-            const sent = await props.app.report(props.identity, props.id, reason());
-            props.onDone(sent ? strings.safety.reported : strings.safety.reportFailed);
-          }}
-        >
-          {strings.safety.reportSend}
-        </button>
-      </div>
-    </div>
-  );
-}
-
 /** Opened from an invite link: asks the group's admins to let this
  * device's identity in. */
 export function JoinSheet(props: { app: AppState; code: string; open: boolean; onClose: () => void }) {
@@ -390,7 +352,6 @@ export function JoinSheet(props: { app: AppState; code: string; open: boolean; o
 
 export function InfoSheet(props: { app: AppState; id: string; open: boolean; onClose: () => void; onGone: () => void }) {
   const [checking, setChecking] = createSignal<string>();
-  const [reporting, setReporting] = createSignal<string>();
   const [deleting, setDeleting] = createSignal(false);
   const [leaving, setLeaving] = createSignal(false);
   const [managing, setManaging] = createSignal<string>();
@@ -774,47 +735,21 @@ export function InfoSheet(props: { app: AppState; id: string; open: boolean; onC
         <Show when={note()}>{(text) => <p class="caption" role="status">{text()}</p>}</Show>
         <For each={props.app.others(conversation() ?? { id: "", members: [], active: false, epoch: 0 })}>
           {(identity) => (
-            <Show
-              when={reporting() === identity}
-              fallback={
-                <div class="row-actions">
-                  <button
-                    class="btn ghost danger-text"
-                    disabled={props.app.blocked().includes(identity)}
-                    onClick={() => {
-                      haptic("tap");
-                      void props.app.block(identity, props.id).then(() => {
-                        if (!props.app.conversation(props.id)) props.onGone();
-                        else setNote(strings.safety.blocked);
-                      });
-                    }}
-                  >
-                    {props.app.blocked().includes(identity) ? strings.safety.blocked : strings.safety.block(props.app.name(identity))}
-                  </button>
-                  <button
-                    class="btn ghost danger-text"
-                    onClick={() => {
-                      haptic("tap");
-                      setReporting(identity);
-                    }}
-                  >
-                    {strings.safety.report(props.app.name(identity))}
-                  </button>
-                </div>
-              }
-            >
-              <Report
-                app={props.app}
-                id={props.id}
-                identity={identity}
-                onCancel={() => setReporting(undefined)}
-                onDone={(text) => {
-                  setReporting(undefined);
-                  setNote(text);
-                  if (!props.app.conversation(props.id)) props.onGone();
+            <div class="row-actions">
+              <button
+                class="btn ghost danger-text"
+                disabled={props.app.blocked().includes(identity)}
+                onClick={() => {
+                  haptic("tap");
+                  void props.app.block(identity, props.id).then(() => {
+                    if (!props.app.conversation(props.id)) props.onGone();
+                    else setNote(strings.safety.blocked);
+                  });
                 }}
-              />
-            </Show>
+              >
+                {props.app.blocked().includes(identity) ? strings.safety.blocked : strings.safety.block(props.app.name(identity))}
+              </button>
+            </div>
           )}
         </For>
         <Show when={group() && conversation()?.active}>

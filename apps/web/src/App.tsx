@@ -11,6 +11,7 @@ import { CallScreen } from "./views/Call";
 import { Chat } from "./views/Chat";
 import { LinkNewDeviceSheet, LinkThisDeviceSheet, RestoreSheet } from "./views/Devices";
 import { Home } from "./views/Home";
+import { LegalLinks } from "./views/Legal";
 import { Onboarding } from "./views/Onboarding";
 import { Settings, type SettingsPage } from "./views/Settings";
 import { checkRelease, release, updated as releaseUpdated } from "./release/pin";
@@ -23,11 +24,23 @@ const depth = (v: View) => (v.name === "home" ? 0 : v.name === "settings" && v.p
 export type SheetName = "newChat" | "myCard" | "info" | "linkThis" | "linkNew" | "restore" | "join" | undefined;
 
 const ONBOARDED = "krypt.onboarded";
+/** Which version of the Terms and Privacy Policy this device was shown.
+ * Raising TERMS_VERSION (an important change) shows the notice again. */
+const TERMS = "krypt.terms";
+const TERMS_VERSION = "1";
 const UPDATE_CHECK_MS = 15 * 60_000;
 
 function onboarded(): boolean {
   try {
     return localStorage.getItem(ONBOARDED) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function termsShown(): boolean {
+  try {
+    return localStorage.getItem(TERMS) === TERMS_VERSION;
   } catch {
     return true;
   }
@@ -63,6 +76,9 @@ export function App() {
   const [card, setCard] = createSignal(linkedCard());
   const [join, setJoin] = createSignal(linkedJoin());
   const [welcome, setWelcome] = createSignal(!onboarded());
+  // People who started before the terms existed see them once; new people
+  // agree at the end of onboarding.
+  const [termsNotice, setTermsNotice] = createSignal(onboarded() && !termsShown());
 
   let stopBackups = () => {};
   onCleanup(() => stopBackups());
@@ -185,12 +201,22 @@ export function App() {
     setView(next);
   };
 
+  const termsSeen = () => {
+    try {
+      localStorage.setItem(TERMS, TERMS_VERSION);
+    } catch {
+      // Shown again next time; harmless.
+    }
+    setTermsNotice(false);
+  };
+
   const finishWelcome = () => {
     try {
       localStorage.setItem(ONBOARDED, "1");
     } catch {
       // Shown again next time; harmless.
     }
+    termsSeen();
     setWelcome(false);
   };
 
@@ -340,6 +366,16 @@ export function App() {
                 <LinkNewDeviceSheet app={state()} open onClose={() => setSheet(undefined)} />
               </Show>
               <CallScreen app={state()} calls={state().calls} />
+              <Show when={termsNotice()}>
+                <div class="terms-notice" role="status">
+                  <p class="caption">
+                    <LegalLinks words={strings.legal.published} />
+                  </p>
+                  <button class="btn ghost" onClick={termsSeen}>
+                    {strings.legal.ok}
+                  </button>
+                </div>
+              </Show>
               <Show when={view().name === "chat" && (view() as { id: string }).id}>
                 {(id) => (
                   <InfoSheet

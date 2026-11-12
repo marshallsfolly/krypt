@@ -118,6 +118,13 @@ function check(force) {
   return checking;
 }
 
+/** The page a navigation to `pathname` gets: one the release lists by that
+ * name (/terms is /terms.html), else the app. */
+function page(running, pathname) {
+  const named = `${pathname.replace(/\.html$/, "")}.html`;
+  return /^\/[a-z]+\.html$/.test(named) && Object.hasOwn(running.files ?? {}, named) ? named : "/index.html";
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil(check(true).then(() => self.skipWaiting()));
 });
@@ -135,7 +142,7 @@ self.addEventListener("fetch", (event) => {
       // Nothing pinned yet (the first visit, before install finished).
       if (!running) return fetch(request);
       if (request.mode === "navigate") event.waitUntil(check(false));
-      const path = request.mode === "navigate" ? "/index.html" : url.pathname;
+      const path = request.mode === "navigate" ? page(running, url.pathname) : url.pathname;
       const hit = await (await caches.open(running.cache)).match(path);
       // What the release does not list is not served, whatever the server has.
       return hit ?? new Response("Not part of this release", { status: 404 });

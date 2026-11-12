@@ -186,10 +186,6 @@ cf-zone-apply:
 cf-r2-apply:
     sops exec-env {{cf_secrets}} 'bash scripts/cloudflare-r2.sh'
 
-# Read the abuse reports people sent (kept 90 days).
-reports:
-    sops exec-env {{cf_secrets}} 'bash scripts/reports.sh'
-
 # Create the TURN key for calls (once), keeping its secret in secrets/turn.yaml.
 cf-turn-apply:
     sops exec-env {{cf_secrets}} 'bash scripts/cloudflare-turn.sh'

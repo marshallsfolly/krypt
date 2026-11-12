@@ -530,7 +530,7 @@ updates its leaf in each conversation, so its groups can turn timers on.
 In a group with a member who has not upgraded, setting the timer fails
 cleanly (`TimerRefused`).
 
-## Requests, blocking and reports (decision 33)
+## Requests and blocking (decisions 33 and 56)
 
 - **Requests.** When a device joins a conversation someone else started and
   none of the other members is someone it knows (named, verified, or met in
@@ -548,12 +548,8 @@ cleanly (`TimerRefused`).
   with a blocked member is refused before joining, and a blocked identity's
   messages and calls in shared groups are dropped. A one-to-one conversation
   with the blocked person is deleted.
-- **Reports** (`POST /v1/report`) are built by the reporter's device: the
-  reported identity, a reason, and the last 20 messages that identity sent
-  in the conversation (files only as their type and size). That is the only
-  content that ever leaves a device unencrypted, and only by the reporter's
-  choice. They are stored under `r/` in R2, deleted after 90 days, limited to
-  4 a minute per address, and read with `just reports`.
+- **No reports** (decision 56): no message ever leaves a device
+  unencrypted. Blocking is how someone stops another person reaching them.
 
 ## Linked devices, handles and backups (decisions 37 and 38)
 
