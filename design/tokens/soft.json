@@ -1,0 +1,93 @@
+{
+  "id": "soft",
+  "name": "Soft Expressive",
+  "summary": "Tonal color, big radii, spring physics, shapes that morph when pressed.",
+  "isDefault": false,
+  "defaultAccent": "violet",
+  "accents": {
+    "violet": { "value": "#6B4EFF", "on": "#FFFFFF", "ink": { "dark": "#C4B5FF", "light": "#6B4EFF" } },
+    "coral":  { "value": "#C8431E", "on": "#FFFFFF", "ink": { "dark": "#FFAB91", "light": "#C8431E" } },
+    "teal":   { "value": "#00796B", "on": "#FFFFFF", "ink": { "dark": "#6FD6C6", "light": "#00796B" } },
+    "blue":   { "value": "#2A5FE6", "on": "#FFFFFF", "ink": { "dark": "#9DB8FF", "light": "#2A5FE6" } }
+  },
+  "color": {
+    "dark": {
+      "bg": "#141218",
+      "surface": "#221F2A",
+      "surfaceRaised": "#2E2A38",
+      "line": "#2E2A38",
+      "fg": "#ECE6F3",
+      "fgMuted": "#B3ACC2",
+      "danger": "#D93A3A",
+      "onDanger": "#FFFFFF",
+      "positive": "#2A8F5C",
+      "onPositive": "#FFFFFF",
+      "scrim": "rgba(0,0,0,0.5)"
+    },
+    "light": {
+      "bg": "#FBF8FF",
+      "surface": "#F1ECFA",
+      "surfaceRaised": "#E4DCF4",
+      "line": "#E4DCF4",
+      "fg": "#1D1A26",
+      "fgMuted": "#585367",
+      "danger": "#C62828",
+      "onDanger": "#FFFFFF",
+      "positive": "#1E7F4F",
+      "onPositive": "#FFFFFF",
+      "scrim": "rgba(29,26,38,0.28)"
+    }
+  },
+  "material": { "blur": 0, "saturation": 1, "ambientGlow": false, "ambientSecondary": null },
+  "type": {
+    "families": {
+      "sans": ["Figtree", "system-ui", "sans-serif"],
+      "mono": ["Figtree", "system-ui", "sans-serif"]
+    },
+    "scale": {
+      "display":  { "family": "sans", "size": 42, "weight": 800, "lineHeight": 1.02, "tracking": -0.025, "case": "none" },
+      "title":    { "family": "sans", "size": 24, "weight": 800, "lineHeight": 1.15, "tracking": 0, "case": "none" },
+      "headline": { "family": "sans", "size": 18, "weight": 800, "lineHeight": 1.3, "tracking": 0, "case": "none" },
+      "body":     { "family": "sans", "size": 16, "weight": 400, "lineHeight": 1.4, "tracking": 0, "case": "none" },
+      "caption":  { "family": "sans", "size": 14, "weight": 600, "lineHeight": 1.35, "tracking": 0, "case": "none" },
+      "label":    { "family": "sans", "size": 13, "weight": 700, "lineHeight": 1.2, "tracking": 0, "case": "none" },
+      "meta":     { "family": "sans", "size": 11, "weight": 600, "lineHeight": 1.2, "tracking": 0, "case": "none" }
+    }
+  },
+  "shape": {
+    "radius": { "sm": 14, "md": 20, "lg": 26, "xl": 32, "pill": 999 },
+    "bubble": { "radius": 24, "tail": 8 },
+    "pressedRadius": 16,
+    "borderWidth": 0
+  },
+  "components": {
+    "message": "bubble",
+    "bubbleFill": "tonal",
+    "avatar": "blob",
+    "control": "circle",
+    "sheet": "docked",
+    "pressFeedback": "morph",
+    "separators": "none"
+  },
+  "motion": {
+    "enter":  { "type": "spring", "response": 0.5, "damping": 0.6, "fromOpacity": 0, "fromScale": 0.6, "fromOffsetY": 16 },
+    "press":  { "type": "spring", "response": 0.42, "damping": 0.6, "scale": 0.9 },
+    "sheet":  { "type": "spring", "response": 0.5, "damping": 0.78 },
+    "screen": { "type": "spring", "response": 0.45, "damping": 0.7, "fromScale": 0.96 },
+    "idle":   { "type": "blobMorph", "periodMs": 7000 }
+  },
+  "haptics": {
+    "tap":          { "label": "soft pop", "web": [10],                       "events": [{ "t": 0, "kind": "transient", "intensity": 0.5, "sharpness": 0.25 }] },
+    "send":         { "label": "pop",      "web": [12],                       "events": [{ "t": 0, "kind": "transient", "intensity": 0.65, "sharpness": 0.3 }] },
+    "receive":      { "label": "bubble",   "web": [8, 40, 12],                "events": [{ "t": 0, "kind": "transient", "intensity": 0.4, "sharpness": 0.3 }, { "t": 48, "kind": "transient", "intensity": 0.55, "sharpness": 0.25 }] },
+    "success":      { "label": "boing",    "web": [10, 30, 10, 30, 25],       "events": [{ "t": 0, "kind": "transient", "intensity": 0.45, "sharpness": 0.2 }, { "t": 40, "kind": "transient", "intensity": 0.6, "sharpness": 0.2 }, { "t": 80, "kind": "transient", "intensity": 0.85, "sharpness": 0.15 }] },
+    "verify":       { "label": "hug",      "web": [25, 40, 25],               "events": [{ "t": 0, "kind": "continuous", "intensity": 0.6, "sharpness": 0.1, "durationMs": 25 }, { "t": 65, "kind": "continuous", "intensity": 0.6, "sharpness": 0.1, "durationMs": 25 }] },
+    "ring":         { "label": "wobble",   "web": [120, 80, 120, 80, 240],    "events": [{ "t": 0, "kind": "continuous", "intensity": 0.5, "sharpness": 0.2, "durationMs": 120 }, { "t": 200, "kind": "continuous", "intensity": 0.5, "sharpness": 0.2, "durationMs": 120 }, { "t": 400, "kind": "continuous", "intensity": 0.7, "sharpness": 0.15, "durationMs": 240 }] },
+    "progressTick": { "label": "rumble",   "web": [8],                        "events": [{ "t": 0, "kind": "transient", "intensity": 0.3, "sharpness": 0.1 }], "scaleWithProgress": true },
+    "cancel":       { "label": "deflate",  "web": [15, 40, 8],                "events": [{ "t": 0, "kind": "continuous", "intensity": 0.5, "sharpness": 0.2, "durationMs": 15 }, { "t": 55, "kind": "transient", "intensity": 0.25, "sharpness": 0.1 }] },
+    "burned":       { "label": "poof",     "web": [10, 20, 10, 20, 10, 20, 80], "events": [{ "t": 0, "kind": "transient", "intensity": 0.35, "sharpness": 0.3 }, { "t": 30, "kind": "transient", "intensity": 0.4, "sharpness": 0.3 }, { "t": 60, "kind": "transient", "intensity": 0.45, "sharpness": 0.3 }, { "t": 90, "kind": "continuous", "intensity": 0.9, "sharpness": 0.1, "durationMs": 80 }] },
+    "sheetDetent":  { "label": "detent",   "web": [10],                       "events": [{ "t": 0, "kind": "transient", "intensity": 0.5, "sharpness": 0.3 }] },
+    "toggle":       { "label": "squish",   "web": [10],                       "events": [{ "t": 0, "kind": "transient", "intensity": 0.5, "sharpness": 0.2 }] },
+    "hangup":       { "label": "bye",      "web": [30, 50, 10],               "events": [{ "t": 0, "kind": "continuous", "intensity": 0.6, "sharpness": 0.3, "durationMs": 30 }, { "t": 80, "kind": "transient", "intensity": 0.3, "sharpness": 0.2 }] }
+  }
+}

@@ -1,0 +1,11 @@
+[toolchain]
+channel = "1.99.1"
+components = ["rustc", "cargo", "clippy", "rustfmt", "rust-src", "rust-analyzer"]
+targets = [
+  "wasm32-unknown-unknown",
+  "aarch64-apple-ios",
+  "aarch64-apple-ios-sim",
+  "aarch64-linux-android",
+  "x86_64-linux-android",
+]
+profile = "minimal"

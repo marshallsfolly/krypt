@@ -1,0 +1,72 @@
+{
+  // krypt on Cloudflare: the web client (static assets, served without
+  // invoking the Worker) and the mailbox (/v1/*: one Durable Object per
+  // conversation log or inbox), on one origin. Deployed with
+  // `just edge-deploy` (credentials from SOPS).
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "krypt-mailbox",
+  "main": "build/worker/shim.mjs",
+  "compatibility_date": "2026-10-01",
+  "build": {
+    "command": "../../scripts/edge-build.sh"
+  },
+  "routes": [
+    { "pattern": "krypt.chat", "custom_domain": true },
+    { "pattern": "api.krypt.chat", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "../../apps/web/dist",
+    "run_worker_first": ["/v1/*"]
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  "durable_objects": {
+    "bindings": [
+      { "name": "LOG", "class_name": "Log" },
+      // @handles and the one-time drops that link devices.
+      { "name": "DIRECTORY", "class_name": "Directory" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Log"] },
+    { "tag": "v2", "new_sqlite_classes": ["Directory"] }
+  ],
+  // Per-IP request limit at the Worker, per Cloudflare location. The address
+  // is a counter key only. Generous enough for carrier-grade NAT, where many
+  // devices share one address; most traffic rides WebSockets, which the
+  // Durable Objects limit per log instead.
+  "ratelimits": [
+    { "name": "PER_IP", "namespace_id": "4100", "simple": { "limit": 1200, "period": 60 } },
+    // Stored file parts (4 MiB each) per address: 128 MiB a minute, so a
+    // 100 MB video goes up in one, and abuse from one address is bounded.
+    { "name": "FILES_PER_IP", "namespace_id": "4101", "simple": { "limit": 32, "period": 60 } },
+    // Call relay credentials per address: a few calls a minute.
+    { "name": "TURN_PER_IP", "namespace_id": "4102", "simple": { "limit": 10, "period": 60 } },
+    // Abuse reports per address.
+    { "name": "REPORTS_PER_IP", "namespace_id": "4103", "simple": { "limit": 4, "period": 60 } },
+    // Handle lookups and changes per address: handles can be guessed, so
+    // listing them must stay slow.
+    { "name": "HANDLES_PER_IP", "namespace_id": "4104", "simple": { "limit": 30, "period": 60 } },
+    // Drop puts and polls per address (a link polls every few seconds).
+    { "name": "DROPS_PER_IP", "namespace_id": "4105", "simple": { "limit": 60, "period": 60 } },
+    { "name": "CREATES_PER_IP", "namespace_id": "4106", "simple": { "limit": 20, "period": 60 } }
+  ],
+  // The Cloudflare TURN key for calls (`just cf-turn-apply`); its API token
+  // is the secret TURN_KEY_API_TOKEN (`just edge-turn-secret`).
+  // Passkeys are made and used on krypt.chat only (`wrangler dev` overrides
+  // both for localhost).
+  "vars": {
+    "TURN_KEY_ID": "1d0eed43888eeaf53b67998adc0aae75",
+    "RP_ID": "krypt.chat",
+    "ORIGINS": "https://krypt.chat"
+  },
+  // Encrypted file parts, deleted 30 days after upload by the bucket's
+  // lifecycle rule (`just cf-r2-apply`). `wrangler dev` simulates it locally.
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "krypt-files" }],
+  // The kill switch is a secret, not a var, so flipping it needs no rebuild:
+  // `just edge-kill` / `just edge-unkill`.
+  // Caps CPU per invocation, so no single request can run away with money.
+  "limits": { "cpu_ms": 200 },
+  // No request logs: they would keep IP addresses (decision 20).
+  "observability": { "enabled": false }
+}

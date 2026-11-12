@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>krypt link preview</title>
+<style>
+@font-face { font-family: Geist; font-weight: 100 900; src: url(../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2) format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-weight: 100 900; src: url(../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2) format("woff2"); }
+html, body { margin: 0; background: #07080C; }
+.card { width: 1200px; height: 630px; box-sizing: border-box; position: relative; overflow: hidden; background: #07080C; font-family: Geist, sans-serif; color: #F2F4F8; }
+.glow { position: absolute; border-radius: 50%; }
+.mint { left: -260px; top: -320px; width: 760px; height: 760px; background: radial-gradient(circle at center, rgba(110,242,208,0.22), rgba(110,242,208,0) 65%); }
+.violet { right: -260px; bottom: -360px; width: 900px; height: 900px; background: radial-gradient(circle at center, rgba(122,92,255,0.34), rgba(122,92,255,0) 65%); }
+.layout { position: relative; height: 100%; box-sizing: border-box; padding: 72px 80px; display: flex; gap: 64px; }
+.copy { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.lockup { display: flex; align-items: center; gap: 14px; font-size: 48px; font-weight: 600; letter-spacing: -0.035em; }
+.pitch { display: flex; flex-direction: column; gap: 28px; }
+h1 { margin: 0; font-size: 64px; line-height: 1.02; font-weight: 600; letter-spacing: -0.04em; }
+h1 span { color: #6EF2D0; }
+.mono { margin: 0; font-family: "Geist Mono", monospace; }
+.claims { font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(242,244,248,0.66); }
+.site { font-size: 22px; font-weight: 500; }
+.chat { width: 420px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.label { display: flex; align-items: center; gap: 8px; align-self: center; margin-bottom: 10px; color: rgba(242,244,248,0.66); font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; }
+.bubble { max-width: 340px; padding: 16px 20px; font-size: 24px; line-height: 1.3; text-wrap: balance; }
+.theirs { align-self: flex-start; border-radius: 22px 22px 22px 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); }
+.mine { align-self: flex-end; border-radius: 22px 22px 8px 22px; background: #6EF2D0; color: #04100C; }
+</style>
+</head>
+<body>
+<!-- The link-preview card, public/og.png. Regenerate with `just web-og`. -->
+<div class="card">
+  <div class="glow mint"></div>
+  <div class="glow violet"></div>
+  <div class="layout">
+    <div class="copy">
+      <div class="lockup">
+        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 18.14A16 16 0 0 1 32 45.86A16 16 0 0 1 32 18.14Z" fill="#6EF2D0"/>
+          <circle cx="24" cy="32" r="16" fill="none" stroke="#F2F4F8" stroke-width="3.5"/>
+          <circle cx="40" cy="32" r="16" fill="none" stroke="#F2F4F8" stroke-width="3.5"/>
+        </svg>
+        krypt
+      </div>
+      <div class="pitch">
+        <h1>Private messaging.<br><span>No phone number.</span></h1>
+        <p class="mono claims">End-to-end encrypted · Post-quantum · No account</p>
+      </div>
+      <p class="mono site">krypt.chat</p>
+    </div>
+    <div class="chat">
+      <div class="mono label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/></svg>
+        End-to-end encrypted
+      </div>
+      <div class="bubble theirs">Here's my card. No number needed.</div>
+      <div class="bubble mine">Scanned. Our safety numbers match.</div>
+      <div class="bubble theirs">Then it's just us.</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

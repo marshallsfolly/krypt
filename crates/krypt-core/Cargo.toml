@@ -1,0 +1,39 @@
+[package]
+name = "krypt-core"
+description = "Sans-IO protocol state machines for krypt."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+krypt-wire.workspace = true
+openmls.workspace = true
+openmls_rust_crypto.workspace = true
+openmls_traits.workspace = true
+openmls_basic_credential.workspace = true
+blake3.workspace = true
+chacha20poly1305.workspace = true
+data-encoding.workspace = true
+ed25519-dalek.workspace = true
+rand_chacha.workspace = true
+rand_core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+postcard.workspace = true
+thiserror.workspace = true
+
+[features]
+# Building for WebAssembly (the Cloudflare edge): randomness and time come
+# from JavaScript.
+js = ["openmls/js"]
+
+[dev-dependencies]
+divan.workspace = true
+
+[[bench]]
+name = "hot_path"
+harness = false
+
+[lints]
+workspace = true

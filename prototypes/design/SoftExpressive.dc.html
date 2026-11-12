@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Soft Expressive</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+.ke.a-violet{--accent:#6B4EFF}
+.ke.a-coral{--accent:#C8431E}
+.ke.a-teal{--accent:#00796B}
+.ke.a-blue{--accent:#2A5FE6}
+.ke.t-light{--bg:#FBF8FF;--c1:#F1ECFA;--c2:#E4DCF4;--fg:#1D1A26;--fg2:#585367;--onAccent:#FFFFFF;--accept:#1E7F4F;--decline:#C62828;--ac:color-mix(in srgb,var(--accent) 16%,var(--bg));--scrim:rgba(29,26,38,.28)}
+.ke.t-dark{--bg:#141218;--c1:#221F2A;--c2:#2E2A38;--fg:#ECE6F3;--fg2:#B3ACC2;--onAccent:#FFFFFF;--accept:#2A8F5C;--decline:#D93A3A;--ac:color-mix(in srgb,var(--accent) 32%,var(--bg));--scrim:rgba(0,0,0,.5)}
+.ke *{box-sizing:border-box}
+.ke button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .42s cubic-bezier(.34,1.56,.64,1),border-radius .42s cubic-bezier(.34,1.56,.64,1),background-color .2s}
+.ke button:active{transform:scale(.94)}
+.ke .morph:active{border-radius:16px!important;transform:scale(.9)}
+.ke input::placeholder{color:var(--fg2)}
+.ke input:focus{outline:none}
+.ke button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.ke .scroll::-webkit-scrollbar{display:none}
+.ke .pop{animation:kePop .5s cubic-bezier(.34,1.56,.64,1) both}
+.ke .scr{animation:keScr .45s cubic-bezier(.34,1.56,.64,1) both}
+.ke .sheet{animation:keSheet .5s cubic-bezier(.34,1.4,.64,1) both}
+.ke .blob{animation:keBlob 7s ease-in-out infinite}
+@keyframes kePop{from{opacity:0;transform:scale(.6) translateY(16px)}to{opacity:1;transform:none}}
+@keyframes keScr{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes keSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes keBlob{0%,100%{border-radius:42% 58% 62% 38%/45% 42% 58% 55%}50%{border-radius:58% 42% 38% 62%/55% 58% 42% 45%}}
+@keyframes keWobble{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.06)}}
+@keyframes keHop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes keDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+@keyframes keShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
+@keyframes kePill{from{opacity:0;transform:translateX(-50%) scale(.7)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+@media (prefers-reduced-motion:reduce){.ke *{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="ke {{themeClass}}" style="position: relative; width: 390px; height: 844px; overflow: hidden; background: var(--bg); color: var(--fg); font-family: Figtree, system-ui, sans-serif; font-size: 16px; line-height: 1.4">
+  <label ref="{{setSw}}" aria-hidden="true" style="position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none"><input type="checkbox" switch="" tabindex="-1"></label>
+
+  <sc-if value="{{hapOn}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; top: 10px; left: 50%; z-index: 60; display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--c2); font-size: 12px; font-weight: 600; white-space: nowrap; animation: kePill .4s cubic-bezier(.34,1.56,.64,1) both">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M3 12h1M7 8v8M11 5v14M15 8v8M19 10v4"></path></svg>
+      <span>{{hap}}</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isIntro}}" hint-placeholder-val="{{true}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; padding: 56px 24px 32px">
+      <div aria-hidden="true" style="position: relative; height: 280px">
+        <div class="blob" style="position: absolute; left: 30px; top: 20px; width: 190px; height: 190px; background: var(--accent)"></div>
+        <div class="blob" style="position: absolute; left: 150px; top: 90px; width: 160px; height: 160px; background: var(--c2); animation-delay: -2s"></div>
+        <div class="blob" style="position: absolute; left: 110px; top: 60px; width: 90px; height: 90px; background: var(--ac); animation-delay: -4s"></div>
+      </div>
+      <h1 style="margin: auto 0 0; font-size: 42px; line-height: 1.02; letter-spacing: -0.025em; font-weight: 800">Hey. You're<br>private here.</h1>
+      <p style="margin: 14px 0 0; color: var(--fg2); font-size: 17px">No phone number, no email, no account. Your keys are made on this phone and stay here.</p>
+      <button type="button" onClick="{{create}}" style="margin-top: 28px; height: 60px; border: 0; border-radius: 30px; background: var(--accent); color: var(--onAccent); font-weight: 700; font-size: 17px">Create my identity</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isGen}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 0 24px">
+      <div style="width: 160px; height: 160px; border-radius: 50%; background: conic-gradient(var(--accent) {{genDeg}}deg, var(--c2) 0); display: flex; align-items: center; justify-content: center">
+        <div style="width: 124px; height: 124px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800">{{genP}}%</div>
+      </div>
+      <span style="font-size: 24px; font-weight: 800">Making your keys</span>
+      <div style="display: flex; flex-direction: column; gap: 10px; color: var(--fg2)">
+        <span>{{gen1}} Identity root</span>
+        <span>{{gen2}} Device certificate</span>
+        <span>{{gen3}} 16 one-time key packages</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isReady}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; padding: 56px 24px 32px">
+      <span style="align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: var(--ac); font-size: 13px; font-weight: 700">All set</span>
+      <div class="pop" style="margin-top: auto; padding: 26px; border-radius: 32px; background: var(--c1); display: flex; flex-direction: column; gap: 10px">
+        <span style="color: var(--fg2); font-size: 14px; font-weight: 600">Your fingerprint</span>
+        <span style="font-size: 30px; font-weight: 800; letter-spacing: .05em; font-variant-numeric: tabular-nums">{{fp}}</span>
+        <span style="color: var(--fg2); font-size: 14px">Burnable. It lives only on this phone.</span>
+      </div>
+      <button type="button" onClick="{{enter}}" style="margin-top: 20px; height: 60px; border: 0; border-radius: 30px; background: var(--accent); color: var(--onAccent); font-weight: 700; font-size: 17px">Let's go</button>
+      <button type="button" onClick="{{toggleHandle}}" style="margin-top: 10px; height: 52px; border: 0; border-radius: 26px; background: var(--c1); font-weight: 600; font-size: 15px">Claim an @handle with a passkey</button>
+      <sc-if value="{{handleNote}}" hint-placeholder-val="{{false}}">
+        <p class="pop" style="margin: 12px 8px 0; color: var(--fg2); font-size: 14px">Totally optional. Adds username lookup and encrypted backup across your devices. Do it any time.</p>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isChat}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column">
+      <div style="padding: 14px 16px 10px; display: flex; align-items: center; gap: 12px">
+        <div class="blob" style="width: 46px; height: 46px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px">A</div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+          <div style="display: flex; align-items: center; gap: 6px">
+            <span style="font-weight: 800; font-size: 18px">Ada</span>
+            <sc-if value="{{verified}}" hint-placeholder-val="{{false}}">
+              <span class="pop" style="display: flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 999px; background: var(--ac); font-size: 11px; font-weight: 700">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>verified
+              </span>
+            </sc-if>
+          </div>
+          <span style="font-size: 12px; color: var(--fg2); font-weight: 600">direct · 38 ms · encrypted</span>
+        </div>
+        <button type="button" class="morph" onClick="{{openVerify}}" aria-label="Encryption details" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="3"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+        </button>
+        <button type="button" class="morph" onClick="{{callOut}}" aria-label="Call Ada" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+        </button>
+        <button type="button" class="morph" onClick="{{openSheet}}" aria-label="More" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg>
+        </button>
+      </div>
+
+      <div ref="{{setScroller}}" class="scroll" style="flex: 1; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px 12px">
+        <sc-for list="{{msgs}}" as="item" hint-placeholder-count="4">
+          <sc-if value="{{item.isSys}}" hint-placeholder-val="{{false}}">
+            <div class="pop" style="align-self: center; margin: 8px 0; padding: 6px 14px; border-radius: 999px; background: var(--c2); font-size: 12px; font-weight: 600; color: var(--fg2)">{{item.text}}</div>
+          </sc-if>
+          <sc-if value="{{item.isTheirs}}" hint-placeholder-val="{{true}}">
+            <div class="pop" style="align-self: flex-start; transform-origin: bottom left; max-width: 78%; padding: 12px 16px 8px; border-radius: 24px 24px 24px 8px; background: var(--c1)">
+              <div>{{item.text}}</div>
+              <div style="margin-top: 2px; font-size: 11px; font-weight: 600; color: var(--fg2)">{{item.meta}}</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{item.isMine}}" hint-placeholder-val="{{false}}">
+            <div class="pop" style="align-self: flex-end; transform-origin: bottom right; max-width: 78%; padding: 12px 16px 8px; border-radius: 24px 24px 8px 24px; background: var(--accent); color: var(--onAccent)">
+              <div>{{item.text}}</div>
+              <div style="margin-top: 2px; font-size: 11px; font-weight: 600; text-align: right; opacity: .85">{{item.meta}}</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{item.isFile}}" hint-placeholder-val="{{false}}">
+            <div class="pop" style="align-self: flex-end; transform-origin: bottom right; width: 270px; padding: 14px; border-radius: 26px 26px 8px 26px; background: var(--ac); display: flex; flex-direction: column; gap: 12px">
+              <div style="display: flex; align-items: center; gap: 12px">
+                <div style="width: 44px; height: 44px; border-radius: 16px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"></path><path d="M14 2v6h6"></path></svg>
+                </div>
+                <div style="display: flex; flex-direction: column; min-width: 0">
+                  <span style="font-weight: 700">{{item.name}}</span>
+                  <span style="font-size: 12px; font-weight: 600; color: var(--fg2)">{{item.size}}</span>
+                </div>
+              </div>
+              <div style="height: 8px; border-radius: 8px; background: var(--c2); overflow: hidden">
+                <div style="height: 100%; width: {{item.pct}}%; border-radius: 8px; background: var(--accent); transition: width .2s cubic-bezier(.34,1.56,.64,1)"></div>
+              </div>
+              <span style="font-size: 12px; font-weight: 600; color: var(--fg2)">{{item.fileLabel}}</span>
+            </div>
+          </sc-if>
+        </sc-for>
+        <sc-if value="{{typing}}" hint-placeholder-val="{{false}}">
+          <div class="pop" role="status" aria-label="Ada is typing" style="align-self: flex-start; transform-origin: bottom left; display: flex; gap: 5px; padding: 15px 18px; border-radius: 24px 24px 24px 8px; background: var(--c1)">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--fg2); animation: keDot 1s infinite"></span>
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--fg2); animation: keDot 1s .12s infinite"></span>
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--fg2); animation: keDot 1s .24s infinite"></span>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="padding: 8px 12px 16px; display: flex; align-items: center; gap: 8px">
+        <button type="button" class="morph" onClick="{{attach}}" aria-label="Send a file" style="width: 52px; height: 52px; flex-shrink: 0; border: 0; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+        </button>
+        <label for="ke-msg" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Message</label>
+        <input id="ke-msg" type="text" value="{{draft}}" onChange="{{onDraft}}" onKeyDown="{{onKey}}" placeholder="Say something nice" autocomplete="off" style="flex: 1; min-width: 0; height: 52px; border: 0; border-radius: 26px; background: var(--c1); color: var(--fg); padding: 0 20px; font: inherit; font-size: 16px">
+        <button type="button" class="morph" onClick="{{send}}" aria-label="Send" style="width: 52px; height: 52px; flex-shrink: 0; border: 0; border-radius: 50%; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+        </button>
+      </div>
+
+      <sc-if value="{{sheet}}" hint-placeholder-val="{{false}}">
+        <div style="position: absolute; inset: 0; z-index: 20; display: flex; flex-direction: column; justify-content: flex-end">
+          <button type="button" onClick="{{closeSheet}}" aria-label="Close menu" style="position: absolute; inset: 0; border: 0; border-radius: 0; background: var(--scrim)"></button>
+          <div class="sheet" style="position: relative; padding: 10px 12px 24px; border-radius: 32px 32px 0 0; background: var(--bg); display: flex; flex-direction: column; gap: 4px">
+            <div aria-hidden="true" style="align-self: center; width: 40px; height: 5px; border-radius: 5px; background: var(--c2); margin-bottom: 8px"></div>
+            <button type="button" onClick="{{openVerify}}" style="display: flex; align-items: center; gap: 14px; padding: 12px; border: 0; border-radius: 22px; background: transparent; text-align: left">
+              <span style="width: 48px; height: 48px; border-radius: 18px; background: var(--ac); display: flex; align-items: center; justify-content: center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              </span>
+              <span style="display: flex; flex-direction: column"><span style="font-weight: 700">Verify safety number</span><span style="font-size: 13px; color: var(--fg2)">Make sure it's really Ada</span></span>
+            </button>
+            <button type="button" onClick="{{callIn}}" style="display: flex; align-items: center; gap: 14px; padding: 12px; border: 0; border-radius: 22px; background: transparent; text-align: left">
+              <span style="width: 48px; height: 48px; border-radius: 18px; background: var(--ac); display: flex; align-items: center; justify-content: center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+              </span>
+              <span style="display: flex; flex-direction: column"><span style="font-weight: 700">Simulate incoming call</span><span style="font-size: 13px; color: var(--fg2)">Prototype only</span></span>
+            </button>
+            <button type="button" onClick="{{openBurn}}" style="display: flex; align-items: center; gap: 14px; padding: 12px; border: 0; border-radius: 22px; background: transparent; text-align: left">
+              <span style="width: 48px; height: 48px; border-radius: 18px; background: color-mix(in srgb, var(--decline) 16%, var(--bg)); color: var(--decline); display: flex; align-items: center; justify-content: center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4.1 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+              </span>
+              <span style="display: flex; flex-direction: column"><span style="font-weight: 700; color: var(--decline)">Burn identity</span><span style="font-size: 13px; color: var(--fg2)">Start over with nothing</span></span>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isVerify}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; padding: 14px 20px 28px; gap: 18px">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <button type="button" class="morph" onClick="{{back}}" aria-label="Back" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+        <span style="font-size: 24px; font-weight: 800">Is it really Ada?</span>
+      </div>
+      <div class="pop" style="align-self: center; padding: 20px; border-radius: 32px; background: var(--c1)">
+        <div role="img" aria-label="Safety number code for scanning" style="display: grid; grid-template-columns: repeat(21, 8px); grid-auto-rows: 8px; gap: 0">
+          <sc-for list="{{qr}}" as="cell" hint-placeholder-count="441">
+            <div style="border-radius: 2px; background: {{cell.bg}}"></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums">
+        <sc-for list="{{safety}}" as="g" hint-placeholder-count="12">
+          <span style="padding: 8px 0; border-radius: 14px; background: var(--c1); text-align: center">{{g.n}}</span>
+        </sc-for>
+      </div>
+      <p style="margin: 0; color: var(--fg2); font-size: 14px; text-align: center">Compare these with Ada in person, or scan each other's code. If they match, nobody's listening in.</p>
+      <sc-if value="{{notVerified}}" hint-placeholder-val="{{true}}">
+        <button type="button" onClick="{{markVerified}}" style="margin-top: auto; height: 60px; border: 0; border-radius: 30px; background: var(--accent); color: var(--onAccent); font-weight: 700; font-size: 17px">They match</button>
+      </sc-if>
+      <sc-if value="{{verified}}" hint-placeholder-val="{{false}}">
+        <div class="pop" style="margin-top: auto; height: 60px; border-radius: 30px; background: var(--ac); display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span>Verified</span>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isIncoming}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 120px 28px 64px">
+      <div style="animation: keWobble 1.6s ease-in-out infinite">
+        <div class="blob" style="width: 140px; height: 140px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center; font-size: 52px; font-weight: 800">A</div>
+      </div>
+      <span style="margin-top: 28px; font-size: 36px; font-weight: 800">Ada</span>
+      <span style="margin-top: 4px; color: var(--fg2); font-weight: 600">is calling · end-to-end encrypted</span>
+      <div style="margin-top: auto; width: 100%; display: flex; justify-content: space-around">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+          <button type="button" class="morph" onClick="{{decline}}" aria-label="Decline" style="width: 76px; height: 76px; border: 0; border-radius: 50%; background: var(--decline); color: #fff; display: flex; align-items: center; justify-content: center">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(135deg)" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+          </button>
+          <span style="font-size: 14px; font-weight: 600; color: var(--fg2)">Not now</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+          <div style="animation: keHop 1.2s cubic-bezier(.34,1.56,.64,1) infinite">
+            <button type="button" class="morph" onClick="{{accept}}" aria-label="Accept" style="width: 76px; height: 76px; border: 0; border-radius: 50%; background: var(--accept); color: #fff; display: flex; align-items: center; justify-content: center">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+            </button>
+          </div>
+          <span style="font-size: 14px; font-weight: 600; color: var(--fg2)">Answer</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isCall}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; padding: 14px 14px 22px; gap: 16px">
+      <div style="position: relative; flex: 1; border-radius: 36px; background: var(--c1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+        <div class="blob" style="width: 110px; height: 110px; background: var(--accent); color: var(--onAccent); display: flex; align-items: center; justify-content: center; font-size: 42px; font-weight: 800">A</div>
+        <span style="margin-top: 8px; font-size: 28px; font-weight: 800">Ada</span>
+        <span style="font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums">{{callTime}}</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background: var(--c2); font-size: 12px; font-weight: 600; color: var(--fg2)">{{callStatus}}</span>
+        <sc-if value="{{cam}}" hint-placeholder-val="{{true}}">
+          <div class="pop" style="position: absolute; top: 16px; right: 16px; width: 92px; height: 128px; border-radius: 24px; background: var(--c2); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; font-size: 12px; font-weight: 700; color: var(--fg2)">you</div>
+        </sc-if>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding: 0 6px">
+        <button type="button" class="morph" onClick="{{toggleMute}}" aria-label="{{muteLabel}}" aria-pressed="{{muted}}" style="width: 68px; height: 68px; border: 0; border-radius: 50%; background: {{muteBg}}; color: {{muteFg}}; display: flex; align-items: center; justify-content: center">
+          <sc-if value="{{muted}}" hint-placeholder-val="{{false}}">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><path d="M12 19v3"></path><path d="M2 2l20 20"></path></svg>
+          </sc-if>
+          <sc-if value="{{unmuted}}" hint-placeholder-val="{{true}}">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><path d="M12 19v3"></path></svg>
+          </sc-if>
+        </button>
+        <button type="button" class="morph" onClick="{{toggleCam}}" aria-label="Camera" aria-pressed="{{cam}}" style="width: 68px; height: 68px; border: 0; border-radius: 50%; background: {{camBg}}; color: {{camFg}}; display: flex; align-items: center; justify-content: center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8z"></path><rect x="2" y="6" width="14" height="12" rx="3"></rect></svg>
+        </button>
+        <button type="button" class="morph" onClick="{{toggleSpeaker}}" aria-label="Speaker" aria-pressed="{{speaker}}" style="width: 68px; height: 68px; border: 0; border-radius: 50%; background: {{speakerBg}}; color: {{speakerFg}}; display: flex; align-items: center; justify-content: center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg>
+        </button>
+        <button type="button" class="morph" onClick="{{hangup}}" aria-label="End call" style="width: 68px; height: 68px; border: 0; border-radius: 50%; background: var(--decline); color: #fff; display: flex; align-items: center; justify-content: center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(135deg)" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isBurn}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; padding: 14px 24px 32px; gap: 18px">
+      <button type="button" class="morph" onClick="{{back}}" aria-label="Back" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--c1); display: flex; align-items: center; justify-content: center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+      </button>
+      <div class="blob" style="margin-top: 36px; width: 76px; height: 76px; background: color-mix(in srgb, var(--decline) 16%, var(--bg)); color: var(--decline); display: flex; align-items: center; justify-content: center">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4.1 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+      </div>
+      <span style="font-size: 34px; font-weight: 800; line-height: 1.05">Burn this<br>identity?</span>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="padding: 12px 16px; border-radius: 20px; background: var(--c1)">Your keys get erased from this phone.</span>
+        <span style="padding: 12px 16px; border-radius: 20px; background: var(--c1)">Your contacts get a signed goodbye.</span>
+        <span style="padding: 12px 16px; border-radius: 20px; background: var(--c1)">Old messages become unreadable, forever.</span>
+      </div>
+      <button type="button" onPointerDown="{{holdStart}}" onPointerUp="{{holdEnd}}" onPointerLeave="{{holdEnd}}" onPointerCancel="{{holdEnd}}" style="position: relative; margin-top: auto; height: 64px; border: 0; border-radius: 32px; background: var(--c1); overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; animation: {{burnAnim}}">
+        <span aria-hidden="true" style="position: absolute; left: 0; top: 0; bottom: 0; width: {{burnP}}%; border-radius: 32px; background: var(--decline)"></span>
+        <span style="position: relative; font-weight: 800; font-size: 17px; color: {{burnFg}}">{{burnLabel}}</span>
+      </button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isBurned}}" hint-placeholder-val="{{false}}">
+    <div class="scr" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 28px; gap: 12px; text-align: center">
+      <span class="pop" style="font-size: 64px; font-weight: 800">Poof.</span>
+      <span style="color: var(--fg2); font-weight: 600">Keys destroyed. Goodbye sent. History unrecoverable.</span>
+      <button type="button" onClick="{{restart}}" style="margin-top: 28px; width: 100%; height: 60px; border: 0; border-radius: 30px; background: var(--accent); color: var(--onAccent); font-weight: 700; font-size: 17px">Start fresh</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"accent":{"editor":"enum","options":["violet","coral","teal","blue"],"default":"violet","section":"Theme"},"showHaptics":{"editor":"boolean","default":true,"section":"Haptics"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.timers = [];
+    this.nextId = 10;
+    this.state = this.fresh();
+    this.replies = ['Got it! Verified on my side too.', 'Whoa, that was instant.', 'Keys look good from here.', 'On it!', 'Sending notes back in a sec.'];
+    this.safety = ['37201', '88412', '09157', '66630', '41298', '75023', '19844', '52076', '30915', '84462', '27709', '61358'].map(n => ({ n }));
+    this.qr = this.makeQr();
+    this.setSw = el => { this.sw = el; };
+    this.setScroller = el => { this.scroller = el; };
+  }
+
+  fresh() {
+    return {
+      screen: 'intro', genP: 0, fp: '', handleNote: false, sheet: false, draft: '', typing: false, verified: false,
+      msgs: [
+        { id: 1, kind: 'sys', text: 'Locked in · end-to-end encrypted' },
+        { id: 2, kind: 'text', mine: false, text: 'Rotated my keys. You should see a new epoch.', time: '20:41' },
+        { id: 3, kind: 'text', mine: true, text: 'Got it. Sending the deck now.', time: '20:42', status: 'read' },
+        { id: 4, kind: 'text', mine: false, text: 'Direct connection, nice. 38 ms.', time: '20:42' }
+      ],
+      hap: '', callSecs: 0, connecting: false, muted: false, cam: true, speaker: false, burnP: 0
+    };
+  }
+
+  haptics() {
+    return {
+      tap: { p: [10], label: 'soft pop' },
+      send: { p: [12], label: 'pop' },
+      receive: { p: [8, 40, 12], label: 'bubble' },
+      success: { p: [10, 30, 10, 30, 25], label: 'boing' },
+      verify: { p: [25, 40, 25], label: 'hug' },
+      ring: { p: [120, 80, 120, 80, 240], label: 'wobble' },
+      tick: { p: [8], label: 'rumble' },
+      cancel: { p: [15, 40, 8], label: 'deflate' },
+      burned: { p: [10, 20, 10, 20, 10, 20, 80], label: 'poof' },
+      sheet: { p: [10], label: 'detent' },
+      toggle: { p: [10], label: 'squish' },
+      end: { p: [30, 50, 10], label: 'bye' }
+    };
+  }
+
+  haptic(kind) {
+    const h = this.haptics()[kind];
+    try { if (navigator.vibrate) navigator.vibrate(h.p); } catch (e) {}
+    try { if (this.sw) this.sw.click(); } catch (e) {}
+    this.setState({ hap: h.label });
+    clearTimeout(this.hapT);
+    this.hapT = setTimeout(() => this.setState({ hap: '' }), 1000);
+  }
+
+  later(ms, fn) { const t = setTimeout(fn, ms); this.timers.push(t); return t; }
+  every(ms, fn) { const t = setInterval(fn, ms); this.timers.push(t); return t; }
+  componentWillUnmount() { this.timers.forEach(t => { clearTimeout(t); clearInterval(t); }); clearTimeout(this.hapT); }
+  componentDidUpdate() { if (this.scroller) this.scroller.scrollTop = this.scroller.scrollHeight; }
+
+  now() { return new Date().toTimeString().slice(0, 5); }
+  fmt(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+  hex4() { return Math.floor(Math.random() * 65536).toString(16).toUpperCase().padStart(4, '0'); }
+  sys(text) { this.setState(s => ({ msgs: s.msgs.concat([{ id: this.nextId++, kind: 'sys', text }]) })); }
+
+  makeQr() {
+    const n = 21, cells = [];
+    let seed = 1337;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+    const finder = (r, c) => {
+      const inBox = (r0, c0) => r >= r0 && r < r0 + 7 && c >= c0 && c < c0 + 7;
+      const box = inBox(0, 0) ? [0, 0] : inBox(0, n - 7) ? [0, n - 7] : inBox(n - 7, 0) ? [n - 7, 0] : null;
+      if (!box) return null;
+      const y = r - box[0], x = c - box[1];
+      return y === 0 || y === 6 || x === 0 || x === 6 || (y >= 2 && y <= 4 && x >= 2 && x <= 4);
+    };
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+      const f = finder(r, c);
+      const on = f === null ? rnd() > 0.52 : f;
+      cells.push({ bg: on ? 'var(--fg)' : 'transparent' });
+    }
+    return cells;
+  }
+
+  create() {
+    this.haptic('tap');
+    this.setState({ screen: 'gen', genP: 0, fp: [this.hex4(), this.hex4(), this.hex4(), this.hex4()].join(' ') });
+    let p = 0;
+    const t = this.every(24, () => {
+      p = Math.min(100, p + 5);
+      this.setState({ genP: p });
+      if (p >= 100) { clearInterval(t); this.setState({ screen: 'ready' }); this.haptic('success'); }
+    });
+  }
+
+  send() {
+    const text = this.state.draft.trim();
+    if (!text) return;
+    const id = this.nextId++;
+    this.haptic('send');
+    this.setState(s => ({ draft: '', msgs: s.msgs.concat([{ id, kind: 'text', mine: true, text, time: this.now(), status: 'sent' }]) }));
+    this.later(450, () => this.setState(s => ({ typing: true, msgs: s.msgs.map(m => m.id === id ? Object.assign({}, m, { status: 'read' }) : m) })));
+    this.later(1500, () => {
+      const reply = this.replies[id % this.replies.length];
+      this.setState(s => ({ typing: false, msgs: s.msgs.concat([{ id: this.nextId++, kind: 'text', mine: false, text: reply, time: this.now() }]) }));
+      this.haptic('receive');
+    });
+  }
+
+  attach() {
+    const id = this.nextId++;
+    this.haptic('tap');
+    this.setState(s => ({ msgs: s.msgs.concat([{ id, kind: 'file', name: 'krypt-deck.pdf', size: '4.2 MB', p: 0 }]) }));
+    let p = 0;
+    const t = this.every(40, () => {
+      p = Math.min(100, p + 2.5);
+      this.setState(s => ({ msgs: s.msgs.map(m => m.id === id ? Object.assign({}, m, { p }) : m) }));
+      if (p >= 100) { clearInterval(t); this.haptic('success'); }
+    });
+  }
+
+  callIn() {
+    this.setState({ sheet: false, screen: 'incoming' });
+    this.haptic('ring');
+    this.ringT = this.every(1600, () => this.haptic('ring'));
+  }
+
+  startCall(connecting) {
+    this.setState({ screen: 'call', callSecs: 0, connecting, muted: false, cam: true, speaker: false });
+    const go = () => {
+      this.setState({ connecting: false });
+      this.callT = this.every(1000, () => this.setState(s => ({ callSecs: s.callSecs + 1 })));
+    };
+    if (connecting) this.later(1100, () => { this.haptic('success'); go(); }); else go();
+  }
+
+  holdStart() {
+    if (this.burnT) return;
+    let p = 0;
+    this.burnT = this.every(30, () => {
+      p = Math.min(100, p + 2);
+      if (p % 10 === 0 && p < 100) this.haptic('tick');
+      this.setState({ burnP: p });
+      if (p >= 100) {
+        clearInterval(this.burnT); this.burnT = null;
+        this.haptic('burned');
+        this.setState({ screen: 'burned' });
+      }
+    });
+  }
+
+  holdEnd() {
+    if (!this.burnT) return;
+    clearInterval(this.burnT); this.burnT = null;
+    this.haptic('cancel');
+    this.setState({ burnP: 0 });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const dark = this.props.dark ?? false;
+    const accent = this.props.accent ?? 'violet';
+    const showHaptics = this.props.showHaptics ?? true;
+    const pressed = v => v ? 'var(--accent)' : 'var(--c1)';
+    const pressedFg = v => v ? 'var(--onAccent)' : 'var(--fg)';
+    const msgs = s.msgs.map(m => {
+      const p = m.p || 0;
+      return {
+        id: m.id, text: m.text, name: m.name, size: m.size,
+        isSys: m.kind === 'sys', isFile: m.kind === 'file',
+        isMine: m.kind === 'text' && m.mine, isTheirs: m.kind === 'text' && !m.mine,
+        meta: (m.time || '') + (m.mine && m.status ? ' · ' + m.status : ''),
+        pct: Math.round(p),
+        fileLabel: p >= 100 ? 'Delivered and verified' : 'Sending directly · 94 MB/s · ' + Math.round(p) + '%'
+      };
+    });
+    return {
+      themeClass: (dark ? 't-dark' : 't-light') + ' a-' + accent,
+      setSw: this.setSw, setScroller: this.setScroller,
+      hapOn: showHaptics && !!s.hap, hap: s.hap,
+      isIntro: s.screen === 'intro', isGen: s.screen === 'gen', isReady: s.screen === 'ready',
+      isChat: s.screen === 'chat', isVerify: s.screen === 'verify', isIncoming: s.screen === 'incoming',
+      isCall: s.screen === 'call', isBurn: s.screen === 'burn', isBurned: s.screen === 'burned',
+      genP: s.genP, genDeg: Math.round(s.genP * 3.6),
+      gen1: s.genP >= 33 ? '✓' : '○', gen2: s.genP >= 66 ? '✓' : '○', gen3: s.genP >= 100 ? '✓' : '○',
+      fp: s.fp, handleNote: s.handleNote,
+      msgs, typing: s.typing, sheet: s.sheet, draft: s.draft,
+      verified: s.verified, notVerified: !s.verified,
+      qr: this.qr, safety: this.safety,
+      callTime: s.connecting ? 'Ringing…' : this.fmt(s.callSecs),
+      callStatus: s.connecting ? 'finding a direct path' : 'direct · 41 ms · encrypted',
+      muted: s.muted, unmuted: !s.muted, cam: s.cam, speaker: s.speaker,
+      muteLabel: s.muted ? 'Unmute' : 'Mute',
+      muteBg: pressed(s.muted), muteFg: pressedFg(s.muted),
+      camBg: pressed(s.cam), camFg: pressedFg(s.cam),
+      speakerBg: pressed(s.speaker), speakerFg: pressedFg(s.speaker),
+      burnP: s.burnP,
+      burnLabel: s.burnP > 0 ? 'Keep holding… ' + s.burnP + '%' : 'Hold to burn',
+      burnFg: s.burnP > 45 ? '#fff' : 'var(--decline)',
+      burnAnim: s.burnP > 0 ? 'keShake .18s linear infinite' : 'none',
+      create: () => this.create(),
+      enter: () => { this.haptic('tap'); this.setState({ screen: 'chat' }); },
+      toggleHandle: () => { this.haptic('toggle'); this.setState(x => ({ handleNote: !x.handleNote })); },
+      onDraft: e => this.setState({ draft: e.target.value }),
+      onKey: e => { if (e.key === 'Enter') { e.preventDefault(); this.send(); } },
+      send: () => this.send(),
+      attach: () => this.attach(),
+      openSheet: () => { this.haptic('sheet'); this.setState({ sheet: true }); },
+      closeSheet: () => this.setState({ sheet: false }),
+      openVerify: () => { this.haptic('tap'); this.setState({ sheet: false, screen: 'verify' }); },
+      openBurn: () => { this.haptic('tap'); this.setState({ sheet: false, screen: 'burn', burnP: 0 }); },
+      back: () => { this.haptic('tap'); this.setState({ screen: 'chat' }); },
+      markVerified: () => {
+        this.haptic('verify');
+        this.setState({ verified: true, screen: 'chat' });
+        this.sys('You verified Ada. Nice!');
+      },
+      callIn: () => this.callIn(),
+      callOut: () => { this.haptic('tap'); this.startCall(true); },
+      accept: () => { clearInterval(this.ringT); this.haptic('success'); this.startCall(false); },
+      decline: () => { clearInterval(this.ringT); this.haptic('end'); this.setState({ screen: 'chat' }); this.sys('You declined a call from Ada'); },
+      hangup: () => {
+        clearInterval(this.callT);
+        this.haptic('end');
+        const d = this.fmt(this.state.callSecs);
+        this.setState({ screen: 'chat' });
+        this.sys('Call ended · ' + d);
+      },
+      toggleMute: () => { this.haptic('toggle'); this.setState(x => ({ muted: !x.muted })); },
+      toggleCam: () => { this.haptic('toggle'); this.setState(x => ({ cam: !x.cam })); },
+      toggleSpeaker: () => { this.haptic('toggle'); this.setState(x => ({ speaker: !x.speaker })); },
+      holdStart: () => this.holdStart(),
+      holdEnd: () => this.holdEnd(),
+      restart: () => { this.haptic('tap'); this.setState(this.fresh()); }
+    };
+  }
+}
+</script>
+</body>
+</html>

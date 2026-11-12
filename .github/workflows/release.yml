@@ -1,0 +1,50 @@
+# Builds a release of the web app from a version tag (docs/releases.md):
+# the sealed Nix build, its manifest, and GitHub's attestation that this
+# workflow built it from this commit. The release is left a draft: it is
+# published once the release key (a hardware key, offline) has signed the
+# manifest (`just release-sign <version>`). Nothing here can sign it.
+
+name: Release
+
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31.11.3
+
+      - name: Build the web app
+        run: nix build .#webDist --print-build-logs
+
+      - name: Write the manifest and the archive
+        run: |
+          cp -rL result dist
+          chmod -R u+w dist
+          node apps/web/scripts/manifest.mjs write dist "$GITHUB_REF_NAME" "$GITHUB_SHA"
+          cp dist/release/manifest.json manifest.json
+          tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner -C dist -cf krypt-web.tar .
+
+      - name: Attest the build
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            krypt-web.tar
+            manifest.json
+
+      - name: Draft the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --draft --verify-tag \
+            --title "$GITHUB_REF_NAME" \
+            --notes "Built from $GITHUB_SHA. Unsigned until the release key signs manifest.json; see docs/releases.md." \
+            krypt-web.tar manifest.json

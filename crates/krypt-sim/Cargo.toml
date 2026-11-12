@@ -1,0 +1,17 @@
+[package]
+name = "krypt-sim"
+description = "Deterministic simulator for krypt."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+krypt-core.workspace = true
+krypt-wire.workspace = true
+blake3.workspace = true
+rand_chacha.workspace = true
+rand_core.workspace = true
+
+[lints]
+workspace = true

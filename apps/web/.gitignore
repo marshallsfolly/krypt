@@ -1,0 +1,5 @@
+node_modules/
+dist/
+# Generated: `just web-core` (wasm-bindgen) and scripts/tokens.mjs.
+src/core/
+src/generated/

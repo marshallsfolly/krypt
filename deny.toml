@@ -1,0 +1,75 @@
+# What krypt's dependency tree may contain (cargo-deny). `nix flake check`
+# runs licenses, bans and sources offline; `just audit` runs advisories,
+# which need the network. The fuzz workspace (fuzz/) ships nothing and is
+# not covered.
+
+[graph]
+# Everything krypt is built for, so platform-only dependencies are checked
+# too: devices, the browser and the edge (wasm), and development machines.
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "aarch64-unknown-linux-gnu",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+    "wasm32-unknown-unknown",
+    "aarch64-apple-ios",
+    "aarch64-apple-ios-sim",
+    "aarch64-linux-android",
+    "x86_64-linux-android",
+]
+
+[licenses]
+# krypt will likely be AGPL-3.0: permissive licenses, and MPL-2.0 (file-level
+# copyleft, compatible with the GPL family). Each is here because something
+# in the tree needs it; an `OR` choice is met by any one of them.
+allow = [
+    "MIT",
+    "Apache-2.0",
+    # The dalek curves, subtle, bindgen; matchit (with MIT).
+    "BSD-3-Clause",
+    # ring (with Apache-2.0), rustls-webpki, untrusted, libloading.
+    "ISC",
+    # hpke-rs: OpenMLS's HPKE, X-Wing included.
+    "MPL-2.0",
+    # ICU (URL handling) and unicode-ident's tables.
+    "Unicode-3.0",
+    # foldhash.
+    "Zlib",
+    # webpki-root-certs: Mozilla's root certificates, as data.
+    "CDLA-Permissive-2.0",
+]
+confidence-threshold = 0.93
+
+# The workspace's own crates are unpublished; krypt's license is set apart
+# from its dependencies'.
+[licenses.private]
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+# Workspace crates depend on each other by path, without a version.
+allow-wildcard-paths = true
+
+[sources]
+# crates.io only: no git dependencies, no other registries.
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
+
+[advisories]
+version = 2
+yanked = "deny"
+# Each ignored advisory needs a reason here.
+ignore = [
+    # crypto-bigint 0.5 may branch on secrets (timing). It arrives through
+    # elliptic-curve 0.13: OpenMLS's provider compiles the NIST curves for
+    # suites krypt never uses (its one suite is X-Wing and Ed25519), and the
+    # edge signs VAPID tokens with p256, a few times a day at most; that key
+    # can only send content-free wakeups. The fix (crypto-bigint 0.7.6)
+    # needs elliptic-curve 0.14: p256 0.14 for the edge, and an OpenMLS
+    # release for the rest. Reviewed 2026-11-06.
+    { id = "RUSTSEC-2026-0387", reason = "unused curves in OpenMLS; low-value VAPID signatures at the edge" },
+]

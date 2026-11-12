@@ -1,0 +1,34 @@
+[package]
+name = "krypt-edge"
+description = "The krypt mailbox on Cloudflare: a Worker and one Durable Object per log."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+krypt-wire.workspace = true
+data-encoding.workspace = true
+blake3.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+url = "2.5.8"
+sha2 = { version = "0.10", default-features = false }
+futures-util.workspace = true
+p256 = { version = "0.13", default-features = false, features = ["ecdsa"] }
+worker = "0.8.7"
+wasm-bindgen = "=0.2.130"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+krypt-core = { workspace = true, features = ["js"] }
+getrandom_02 = { package = "getrandom", version = "0.2", features = ["js"] }
+getrandom_04 = { package = "getrandom", version = "0.4", features = ["wasm_js"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+krypt-core.workspace = true
+
+[lints]
+workspace = true

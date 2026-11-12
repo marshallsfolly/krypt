@@ -1,0 +1,22 @@
+/target
+/result*
+.direnv/
+node_modules/
+.wrangler/
+*.dec.yaml
+# Never committed: SOPS secrets (kept on the owner's machines), decrypted
+# or local secrets, and key stores.
+/secrets/
+/.sops.yaml
+.env
+.env.*
+*.pem
+*.p12
+*.jks
+*.keystore
+.DS_Store
+# Local secrets for `wrangler dev` (throwaway; see scripts/dev-vapid.sh).
+.dev.vars
+
+# Agent worktrees (local only)
+/.claude/worktrees/

@@ -1,0 +1,23 @@
+[package]
+name = "krypt-cli"
+description = "krypt on the command line."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "krypt"
+path = "src/main.rs"
+
+[dependencies]
+qrcode.workspace = true
+krypt-core.workspace = true
+krypt-net.workspace = true
+krypt-wire.workspace = true
+clap.workspace = true
+tokio = { workspace = true, features = ["io-std", "io-util"] }
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

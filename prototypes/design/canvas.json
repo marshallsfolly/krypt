@@ -1,0 +1,33 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-05T21:00:00Z" },
+  "title": "krypt.chat design directions",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 844, "title": "A · Obsidian Glass", "is_interactive": true, "radius": 44 },
+    "SwissMono.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "B · Swiss Mono", "is_interactive": true },
+    "SoftExpressive.dc.html": { "x": 940, "y": 0, "w": 390, "h": 844, "title": "C · Soft Expressive", "is_interactive": true, "radius": 44 }
+  },
+  "order": ["Main.dc.html", "SwissMono.dc.html", "SoftExpressive.dc.html"],
+  "notes": {
+    "title": { "x": 0, "y": -300, "text": "krypt.chat — three directions", "kind": "title1", "maxW": 1330 },
+    "howto": {
+      "x": 1410, "y": 0, "w": 380, "size": "m", "fill": "gray",
+      "text": "How to try them\n\nPress Play on a phone. Each prototype runs the same flow:\n\n1. Create identity: no phone, no email.\n2. Chat: type and send; the paperclip sends a file.\n3. The ⋯ menu: verify safety number, simulate an incoming call, burn identity. The lock icon also opens verify.\n\nTweaks: dark/light, accent, haptic labels.\n\nOn Android Chrome you feel real vibration and on iPhone a system tick, where the browser allows it inside this preview. Everywhere, the pill at the top names the haptic that just fired."
+    },
+    "a": {
+      "x": 0, "y": 964, "w": 390, "size": "s", "fill": "teal",
+      "text": "A · Obsidian Glass\nDark-first, translucent depth, one electric accent. Quiet and premium.\n\nType: Geist + Geist Mono\nMotion: 320 ms blur-fade, slow ambient light\nHaptics: soft tick (send) · glass tap (receive) · deep thunk (verify) · ring pulse · rising ticks → shatter (burn)"
+    },
+    "b": {
+      "x": 470, "y": 964, "w": 390, "size": "s", "fill": "orange",
+      "text": "B · Swiss Mono\nNo bubbles. Strict grid, mono metadata, black/white + signal orange. Fast and plain-spoken.\n\nType: Inter Tight + JetBrains Mono\nMotion: none, instant cuts\nHaptics: one crisp click for everything · double click = success · bell = ring · a click every 10% while burning"
+    },
+    "c": {
+      "x": 940, "y": 964, "w": 390, "size": "s", "fill": "purple",
+      "text": "C · Soft Expressive\nTonal color, big radii, spring physics, shapes that morph when pressed. Friendly and alive.\n\nType: Figtree\nMotion: overshoot springs (cubic-bezier .34, 1.56, .64, 1)\nHaptics: pop (send) · bubble (receive) · boing (success) · hug (verify) · wobble (ring) · rumble → poof (burn)"
+    }
+  },
+  "designSystems": []
+}

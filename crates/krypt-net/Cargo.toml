@@ -1,0 +1,31 @@
+[package]
+name = "krypt-net"
+description = "Runs a krypt device on real networks: WebSockets and HTTP to the mailbox."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+krypt-core.workspace = true
+krypt-store.workspace = true
+krypt-wire.workspace = true
+tokio.workspace = true
+reqwest.workspace = true
+rustls.workspace = true
+rustls-platform-verifier.workspace = true
+tokio-tungstenite.workspace = true
+futures-util.workspace = true
+tracing.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+krypt-devmailbox.workspace = true
+axum.workspace = true
+data-encoding.workspace = true
+p256 = { version = "0.13", default-features = false, features = ["ecdsa"] }
+tempfile.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

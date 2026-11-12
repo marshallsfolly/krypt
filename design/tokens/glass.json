@@ -1,0 +1,93 @@
+{
+  "id": "glass",
+  "name": "Obsidian Glass",
+  "summary": "Dark-first, translucent depth, one electric accent. Quiet and premium.",
+  "isDefault": true,
+  "defaultAccent": "mint",
+  "accents": {
+    "mint":   { "value": "#6EF2D0", "on": "#04100C", "ink": { "dark": "#6EF2D0", "light": "#0B6B57" } },
+    "ice":    { "value": "#8AB4FF", "on": "#04100C", "ink": { "dark": "#8AB4FF", "light": "#2453B8" } },
+    "violet": { "value": "#B49CFF", "on": "#04100C", "ink": { "dark": "#B49CFF", "light": "#5B3FD6" } },
+    "amber":  { "value": "#FFC46B", "on": "#04100C", "ink": { "dark": "#FFC46B", "light": "#8A5300" } }
+  },
+  "color": {
+    "dark": {
+      "bg": "#07080C",
+      "surface": "rgba(255,255,255,0.06)",
+      "surfaceRaised": "rgba(22,24,32,0.72)",
+      "line": "rgba(255,255,255,0.12)",
+      "fg": "#F2F4F8",
+      "fgMuted": "rgba(242,244,248,0.66)",
+      "danger": "#FF6B6B",
+      "onDanger": "#1A0606",
+      "positive": "{accent}",
+      "onPositive": "{accent.on}",
+      "scrim": "rgba(0,0,0,0.5)"
+    },
+    "light": {
+      "bg": "#E8EBF1",
+      "surface": "rgba(255,255,255,0.55)",
+      "surfaceRaised": "rgba(255,255,255,0.82)",
+      "line": "rgba(255,255,255,0.95)",
+      "fg": "#0B0D12",
+      "fgMuted": "rgba(11,13,18,0.68)",
+      "danger": "#C62828",
+      "onDanger": "#FFFFFF",
+      "positive": "{accent}",
+      "onPositive": "{accent.on}",
+      "scrim": "rgba(10,12,20,0.25)"
+    }
+  },
+  "material": { "blur": 24, "saturation": 1.6, "ambientGlow": true, "ambientSecondary": "#7A5CFF" },
+  "type": {
+    "families": {
+      "sans": ["Geist", "system-ui", "sans-serif"],
+      "mono": ["Geist Mono", "ui-monospace", "monospace"]
+    },
+    "scale": {
+      "display":  { "family": "sans", "size": 44, "weight": 600, "lineHeight": 1.02, "tracking": -0.035, "case": "none" },
+      "title":    { "family": "sans", "size": 26, "weight": 600, "lineHeight": 1.15, "tracking": -0.02, "case": "none" },
+      "headline": { "family": "sans", "size": 17, "weight": 600, "lineHeight": 1.3, "tracking": 0, "case": "none" },
+      "body":     { "family": "sans", "size": 15, "weight": 400, "lineHeight": 1.4, "tracking": 0, "case": "none" },
+      "caption":  { "family": "sans", "size": 13, "weight": 400, "lineHeight": 1.35, "tracking": 0, "case": "none" },
+      "label":    { "family": "mono", "size": 12, "weight": 500, "lineHeight": 1.2, "tracking": 0.08, "case": "upper" },
+      "meta":     { "family": "mono", "size": 11, "weight": 400, "lineHeight": 1.2, "tracking": 0, "case": "none" }
+    }
+  },
+  "shape": {
+    "radius": { "sm": 12, "md": 16, "lg": 22, "xl": 28, "pill": 999 },
+    "bubble": { "radius": 20, "tail": 6 },
+    "pressedRadius": null,
+    "borderWidth": 1
+  },
+  "components": {
+    "message": "bubble",
+    "bubbleFill": "glass",
+    "avatar": "circle",
+    "control": "rounded",
+    "sheet": "floating",
+    "pressFeedback": "scale",
+    "separators": "none"
+  },
+  "motion": {
+    "enter":  { "type": "timing", "durationMs": 320, "easing": [0.2, 0.8, 0.2, 1], "fromOpacity": 0, "fromScale": 0.98, "fromOffsetY": 10, "fromBlur": 8 },
+    "press":  { "type": "timing", "durationMs": 180, "easing": [0.2, 0.8, 0.2, 1], "scale": 0.95 },
+    "sheet":  { "type": "timing", "durationMs": 360, "easing": [0.2, 0.8, 0.2, 1] },
+    "screen": { "type": "timing", "durationMs": 320, "easing": [0.2, 0.8, 0.2, 1], "fromBlur": 10 },
+    "idle":   { "type": "ambientDrift", "periodMs": 16000 }
+  },
+  "haptics": {
+    "tap":          { "label": "light tap",     "web": [6],               "events": [{ "t": 0, "kind": "transient", "intensity": 0.35, "sharpness": 0.4 }] },
+    "send":         { "label": "soft tick",     "web": [8],               "events": [{ "t": 0, "kind": "transient", "intensity": 0.5, "sharpness": 0.35 }] },
+    "receive":      { "label": "glass tap",     "web": [6, 40, 6],        "events": [{ "t": 0, "kind": "transient", "intensity": 0.4, "sharpness": 0.75 }, { "t": 45, "kind": "transient", "intensity": 0.3, "sharpness": 0.75 }] },
+    "success":      { "label": "success swell", "web": [10, 50, 20],      "events": [{ "t": 0, "kind": "transient", "intensity": 0.4, "sharpness": 0.4 }, { "t": 60, "kind": "transient", "intensity": 0.75, "sharpness": 0.3 }] },
+    "verify":       { "label": "deep thunk",    "web": [45],              "events": [{ "t": 0, "kind": "continuous", "intensity": 1.0, "sharpness": 0.05, "durationMs": 45 }] },
+    "ring":         { "label": "ring pulse",    "web": [300, 200, 300],   "events": [{ "t": 0, "kind": "continuous", "intensity": 0.6, "sharpness": 0.2, "durationMs": 300 }, { "t": 500, "kind": "continuous", "intensity": 0.6, "sharpness": 0.2, "durationMs": 300 }] },
+    "progressTick": { "label": "rising tick",   "web": [5],               "events": [{ "t": 0, "kind": "transient", "intensity": 0.3, "sharpness": 0.6 }], "scaleWithProgress": true },
+    "cancel":       { "label": "release",       "web": [12, 30, 12],      "events": [{ "t": 0, "kind": "transient", "intensity": 0.4, "sharpness": 0.3 }, { "t": 42, "kind": "transient", "intensity": 0.25, "sharpness": 0.3 }] },
+    "burned":       { "label": "shatter",       "web": [20, 30, 20, 30, 70], "events": [{ "t": 0, "kind": "transient", "intensity": 0.6, "sharpness": 0.9 }, { "t": 50, "kind": "transient", "intensity": 0.7, "sharpness": 0.9 }, { "t": 100, "kind": "continuous", "intensity": 1.0, "sharpness": 0.2, "durationMs": 70 }] },
+    "sheetDetent":  { "label": "sheet detent",  "web": [7],               "events": [{ "t": 0, "kind": "transient", "intensity": 0.45, "sharpness": 0.5 }] },
+    "toggle":       { "label": "toggle",        "web": [7],               "events": [{ "t": 0, "kind": "transient", "intensity": 0.45, "sharpness": 0.6 }] },
+    "hangup":       { "label": "hang up",       "web": [30, 40, 15],      "events": [{ "t": 0, "kind": "continuous", "intensity": 0.7, "sharpness": 0.3, "durationMs": 30 }, { "t": 70, "kind": "transient", "intensity": 0.3, "sharpness": 0.3 }] }
+  }
+}
